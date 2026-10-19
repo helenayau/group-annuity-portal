@@ -71,8 +71,8 @@ function PersonalInfoView({ holder, onEdit }: { holder: AccountHolder; onEdit: (
         <dl className='grid grid-cols-1 gap-4 md:grid-cols-2'>
           {fields.map(([label, value]) => (
             <div key={label}>
-              <dt className='text-muted-foreground text-sm'>{label}</dt>
-              <dd className='font-medium'>{value}</dd>
+              <dt className='text-foreground text-sm font-bold'>{label}</dt>
+              <dd className='text-muted-foreground text-sm'>{value}</dd>
             </div>
           ))}
         </dl>
