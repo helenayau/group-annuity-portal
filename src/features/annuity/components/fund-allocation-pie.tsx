@@ -57,6 +57,7 @@ export function FundAllocationPie() {
               paddingAngle={4}
             />
             <ChartLegend
+              itemSorter={null}
               content={
                 <ChartLegendContent
                   nameKey='category'

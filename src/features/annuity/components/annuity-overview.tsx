@@ -29,10 +29,10 @@ export function AnnuityOverview() {
       <div className='grid grid-cols-1 gap-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card *:data-[slot=card]:shadow-xs dark:*:data-[slot=card]:bg-card md:grid-cols-2 lg:grid-cols-4'>
         <Card className='@container/card'>
           <CardHeader>
-            <CardDescription className='font-bold text-foreground'>Account Value</CardDescription>
-            <CardTitle className='text-2xl font-normal tabular-nums @[250px]/card:text-3xl'>
+            <CardTitle>Account Value</CardTitle>
+            <CardDescription className='text-2xl font-normal text-foreground tabular-nums @[250px]/card:text-3xl'>
               {formatCurrency(annuitySummary.accountValue)}
-            </CardTitle>
+            </CardDescription>
             <CardAction>
               <Badge variant='outline'>{annuitySummary.contractType}</Badge>
             </CardAction>
@@ -43,12 +43,10 @@ export function AnnuityOverview() {
         </Card>
         <Card className='@container/card'>
           <CardHeader>
-            <CardDescription className='font-bold text-foreground'>
-              Guaranteed Monthly Income
-            </CardDescription>
-            <CardTitle className='text-2xl font-normal tabular-nums @[250px]/card:text-3xl'>
+            <CardTitle>Guaranteed Monthly Income</CardTitle>
+            <CardDescription className='text-2xl font-normal text-foreground tabular-nums @[250px]/card:text-3xl'>
               {formatCurrency(annuitySummary.guaranteedMonthlyIncome)}
-            </CardTitle>
+            </CardDescription>
             <CardAction>
               <Badge variant='outline'>
                 <Icons.check />
@@ -62,10 +60,10 @@ export function AnnuityOverview() {
         </Card>
         <Card className='@container/card'>
           <CardHeader>
-            <CardDescription className='font-bold text-foreground'>Next Payout</CardDescription>
-            <CardTitle className='text-2xl font-normal tabular-nums @[250px]/card:text-3xl'>
+            <CardTitle>Next Payout</CardTitle>
+            <CardDescription className='text-2xl font-normal text-foreground tabular-nums @[250px]/card:text-3xl'>
               {annuitySummary.nextPayoutDate}
-            </CardTitle>
+            </CardDescription>
             <CardAction>
               <Badge variant='outline'>
                 <Icons.calendar />
@@ -77,14 +75,12 @@ export function AnnuityOverview() {
         </Card>
         <Card className='@container/card'>
           <CardHeader>
-            <CardDescription className='font-bold text-foreground'>
-              Withdrawals (YTD)
-            </CardDescription>
-            <CardTitle className='text-2xl font-normal tabular-nums @[250px]/card:text-3xl'>
+            <CardTitle>Withdrawals (YTD)</CardTitle>
+            <CardDescription className='text-2xl font-normal text-foreground tabular-nums @[250px]/card:text-3xl'>
               {formatCurrency(
                 withdrawals.reduce((total, withdrawal) => total + withdrawal.amount, 0)
               )}
-            </CardTitle>
+            </CardDescription>
             <CardAction>
               <a href='#withdrawal-history'>
                 <Badge variant='outline' className='cursor-pointer hover:bg-accent'>
