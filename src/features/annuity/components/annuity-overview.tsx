@@ -43,38 +43,6 @@ export function AnnuityOverview() {
         </Card>
         <Card className='@container/card'>
           <CardHeader>
-            <CardTitle>Guaranteed Monthly Income</CardTitle>
-            <CardDescription className='text-2xl font-normal text-foreground tabular-nums @[250px]/card:text-3xl'>
-              {formatCurrency(annuitySummary.guaranteedMonthlyIncome)}
-            </CardDescription>
-            <CardAction>
-              <Badge variant='outline'>
-                <Icons.check />
-                Locked in
-              </Badge>
-            </CardAction>
-          </CardHeader>
-          <CardFooter className='text-muted-foreground text-sm'>
-            Paid for {annuitySummary.payoutsRemaining.toLowerCase()}
-          </CardFooter>
-        </Card>
-        <Card className='@container/card'>
-          <CardHeader>
-            <CardTitle>Next Payout</CardTitle>
-            <CardDescription className='text-2xl font-normal text-foreground tabular-nums @[250px]/card:text-3xl'>
-              {annuitySummary.nextPayoutDate}
-            </CardDescription>
-            <CardAction>
-              <Badge variant='outline'>
-                <Icons.calendar />
-                Scheduled
-              </Badge>
-            </CardAction>
-          </CardHeader>
-          <CardFooter className='text-muted-foreground text-sm'>Deposited automatically</CardFooter>
-        </Card>
-        <Card className='@container/card'>
-          <CardHeader>
             <CardTitle>Withdrawals (YTD)</CardTitle>
             <CardDescription className='text-2xl font-normal text-foreground tabular-nums @[250px]/card:text-3xl'>
               {formatCurrency(
@@ -97,6 +65,26 @@ export function AnnuityOverview() {
             </CardAction>
           </CardHeader>
           <CardFooter className='text-muted-foreground text-sm'>Year to date</CardFooter>
+        </Card>
+        <Card className='@container/card'>
+          <CardHeader>
+            <CardTitle>Guaranteed Monthly Income</CardTitle>
+            <CardDescription className='text-2xl font-normal text-foreground tabular-nums @[250px]/card:text-3xl'>
+              {formatCurrency(annuitySummary.guaranteedMonthlyIncome)}
+            </CardDescription>
+          </CardHeader>
+          <CardFooter className='text-muted-foreground text-sm'>
+            Paid for {annuitySummary.payoutsRemaining.toLowerCase()}
+          </CardFooter>
+        </Card>
+        <Card className='@container/card'>
+          <CardHeader>
+            <CardTitle>Next Payout</CardTitle>
+            <CardDescription className='text-2xl font-normal text-foreground tabular-nums @[250px]/card:text-3xl'>
+              {annuitySummary.nextPayoutDate}
+            </CardDescription>
+          </CardHeader>
+          <CardFooter className='text-muted-foreground text-sm'>Deposited automatically</CardFooter>
         </Card>
       </div>
 

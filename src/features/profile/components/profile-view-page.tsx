@@ -59,7 +59,9 @@ function PersonalInfoView({ holder, onEdit }: { holder: AccountHolder; onEdit: (
     <>
       <CardHeader>
         <CardTitle>Personal Information</CardTitle>
-        <CardDescription>Your contact details and mailing address</CardDescription>
+        <CardDescription>
+          Keep this up to date so your payments and statements reach you.
+        </CardDescription>
         <CardAction>
           <Button variant='outline' size='sm' onClick={onEdit}>
             <Icons.edit className='mr-2 h-4 w-4' />
@@ -215,7 +217,7 @@ export default function ProfileViewPage() {
   return (
     <PageContainer
       pageTitle='Profile'
-      pageDescription='Keep this up to date so your payments and statements reach you.'
+      pageDescription='Manage your personal information and preferences'
     >
       <div className='flex flex-col gap-4'>
         <Card>
