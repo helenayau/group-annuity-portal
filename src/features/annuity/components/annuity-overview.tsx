@@ -82,11 +82,18 @@ export function AnnuityOverview() {
               )}
             </CardDescription>
             <CardAction>
-              <a href='#withdrawal-history'>
-                <Badge variant='outline' className='cursor-pointer hover:bg-accent'>
-                  {withdrawals.length} transactions
-                </Badge>
-              </a>
+              <Badge
+                variant='outline'
+                render={
+                  <a
+                    href='#withdrawal-history'
+                    aria-label={`View ${withdrawals.length} withdrawal transactions`}
+                  />
+                }
+                className='cursor-pointer hover:bg-accent'
+              >
+                {withdrawals.length} transactions
+              </Badge>
             </CardAction>
           </CardHeader>
           <CardFooter className='text-muted-foreground text-sm'>Year to date</CardFooter>
