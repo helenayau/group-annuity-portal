@@ -213,7 +213,7 @@ export default function ProfileViewPage() {
   return (
     <PageContainer
       pageTitle='Profile'
-      pageDescription='Manage your personal information and preferences'
+      pageDescription='Keep this up to date so your payments and statements reach you.'
     >
       <div className='flex flex-col gap-4'>
         <Card>
@@ -288,7 +288,7 @@ export default function ProfileViewPage() {
                 />
               </div>
               <preferencesForm.AppForm>
-                <preferencesForm.SubmitButton disabled={!preferencesDirty}>
+                <preferencesForm.SubmitButton disabled={!preferencesDirty} className='self-start'>
                   Save preferences
                 </preferencesForm.SubmitButton>
               </preferencesForm.AppForm>
