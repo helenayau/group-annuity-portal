@@ -37,7 +37,15 @@ export function FundAllocationPie() {
           className='[&_.recharts-text]:fill-background mx-auto aspect-square max-h-[360px] min-h-[300px]'
         >
           <PieChart>
-            <ChartTooltip content={<ChartTooltipContent nameKey='category' hideLabel />} />
+            <ChartTooltip
+              content={
+                <ChartTooltipContent
+                  nameKey='category'
+                  hideLabel
+                  valueFormatter={(value) => `${value}%`}
+                />
+              }
+            />
             <Pie
               data={chartData}
               dataKey='percent'

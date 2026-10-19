@@ -10,6 +10,7 @@ import {
   ChartTooltipContent
 } from '@/components/ui/chart';
 import { incomeSchedule } from '@/constants/mock-api-annuity';
+import { formatCurrency } from '../utils';
 
 const chartConfig = {
   guaranteed: {
@@ -34,7 +35,11 @@ export function IncomeScheduleChart() {
           <BarChart accessibilityLayer data={incomeSchedule}>
             <CartesianGrid vertical={false} />
             <XAxis dataKey='month' tickLine={false} axisLine={false} tickMargin={8} />
-            <ChartTooltip content={<ChartTooltipContent />} />
+            <ChartTooltip
+              content={
+                <ChartTooltipContent valueFormatter={(value) => formatCurrency(Number(value))} />
+              }
+            />
             <Bar
               dataKey='guaranteed'
               stackId='a'
