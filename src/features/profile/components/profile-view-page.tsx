@@ -60,7 +60,7 @@ function PersonalInfoView({ holder, onEdit }: { holder: AccountHolder; onEdit: (
       <CardHeader>
         <CardTitle>Personal Information</CardTitle>
         <CardDescription>
-          Keep this up to date so your payments and statements reach you.
+          Keep this up to date so your payments and statements reach you
         </CardDescription>
         <CardAction>
           <Button variant='outline' size='sm' onClick={onEdit}>
