@@ -105,19 +105,6 @@ export const NotificationCard: FC<NotificationCardProps> = ({
             {/* Description */}
             <p className='text-muted-foreground mb-0 text-[13px]'>{body}</p>
           </div>
-
-          {/* Mark as read button */}
-          {isUnread && onMarkAsRead && (
-            <Button
-              type='button'
-              variant='ghost'
-              size='icon-sm'
-              onClick={() => onMarkAsRead(id)}
-              aria-label='Mark as read'
-            >
-              <Icons.check size={16} />
-            </Button>
-          )}
         </div>
 
         <div className='mt-3 flex items-end justify-between'>

@@ -128,7 +128,6 @@ export default function AppSidebar() {
                 }
               >
                 {user && <UserAvatarProfile className='h-8 w-8 rounded-lg' showInfo user={user} />}
-                <Icons.chevronsDown className='ml-auto size-4' />
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 className='w-(--anchor-width) min-w-56 rounded-lg'

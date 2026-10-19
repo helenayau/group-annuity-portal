@@ -82,7 +82,11 @@ export function AnnuityOverview() {
               )}
             </CardTitle>
             <CardAction>
-              <Badge variant='outline'>{withdrawals.length} transactions</Badge>
+              <a href='#withdrawal-history'>
+                <Badge variant='outline' className='cursor-pointer hover:bg-accent'>
+                  {withdrawals.length} transactions
+                </Badge>
+              </a>
             </CardAction>
           </CardHeader>
           <CardFooter className='text-muted-foreground text-sm'>Year to date</CardFooter>
@@ -99,7 +103,7 @@ export function AnnuityOverview() {
       </div>
 
       <div className='grid grid-cols-1 gap-4 lg:grid-cols-7'>
-        <Card className='lg:col-span-4'>
+        <Card id='withdrawal-history' className='lg:col-span-4 scroll-mt-20'>
           <CardHeader>
             <CardTitle>Withdrawal History</CardTitle>
             <CardDescription>Your most recent payouts and withdrawals</CardDescription>

@@ -34,7 +34,7 @@ export function FundAllocationPie() {
       <CardContent className='flex flex-1 flex-col items-center justify-center pb-0'>
         <ChartContainer
           config={chartConfig}
-          className='[&_.recharts-text]:fill-background mx-auto aspect-square max-h-[220px] min-h-[180px]'
+          className='[&_.recharts-text]:fill-background mx-auto aspect-square max-h-[360px] min-h-[300px]'
         >
           <PieChart>
             <ChartTooltip content={<ChartTooltipContent nameKey='category' hideLabel />} />
@@ -42,11 +42,18 @@ export function FundAllocationPie() {
               data={chartData}
               dataKey='percent'
               nameKey='category'
-              innerRadius={40}
+              innerRadius={60}
               cornerRadius={8}
               paddingAngle={4}
             />
-            <ChartLegend content={<ChartLegendContent nameKey='category' />} />
+            <ChartLegend
+              content={
+                <ChartLegendContent
+                  nameKey='category'
+                  className='flex-wrap gap-x-6 gap-y-2 text-base whitespace-nowrap'
+                />
+              }
+            />
           </PieChart>
         </ChartContainer>
       </CardContent>

@@ -287,14 +287,12 @@ export default function ProfileViewPage() {
                   )}
                 />
               </div>
-            </CardContent>
-            <CardFooter>
               <preferencesForm.AppForm>
                 <preferencesForm.SubmitButton disabled={!preferencesDirty}>
                   Save preferences
                 </preferencesForm.SubmitButton>
               </preferencesForm.AppForm>
-            </CardFooter>
+            </CardContent>
           </form>
         </Card>
       </div>
