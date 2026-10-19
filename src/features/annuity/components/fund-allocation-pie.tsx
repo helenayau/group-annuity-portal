@@ -13,13 +13,15 @@ import {
 } from '@/components/ui/chart';
 import { fundAllocation } from '@/constants/mock-api-annuity';
 
-const chartData = fundAllocation.map((item, index) => ({
+const sortedFundAllocation = [...fundAllocation].sort((a, b) => b.percent - a.percent);
+
+const chartData = sortedFundAllocation.map((item, index) => ({
   category: item.category,
   percent: item.percent,
   fill: `var(--chart-${index + 1})`
 }));
 
-const chartConfig = fundAllocation.reduce((config, item, index) => {
+const chartConfig = sortedFundAllocation.reduce((config, item, index) => {
   config[item.category] = { label: item.category, color: `var(--chart-${index + 1})` };
   return config;
 }, {} as ChartConfig);
