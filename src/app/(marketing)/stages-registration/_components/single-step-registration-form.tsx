@@ -57,9 +57,13 @@ export function SingleStepRegistrationForm() {
         className={`mt-12 flex flex-col gap-8 ${pruClass.formWidth}`}
         data-registration-variant='single-page'
       >
-        <NameFields form={form} />
-        <ContactFields form={form} />
-        <PasswordFieldSection form={form} />
+        {/* h asked for narrower fields on this version only; the consent
+            copy below keeps the full column. */}
+        <div className='flex w-full max-w-[360px] flex-col gap-8'>
+          <NameFields form={form} />
+          <ContactFields form={form} />
+          <PasswordFieldSection form={form} />
+        </div>
 
         <div className='mt-4 flex flex-col gap-6'>
           <ConsentField form={form} />
