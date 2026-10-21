@@ -13,23 +13,10 @@ import {
   InfobarTrigger,
   useInfobar
 } from '@/components/ui/infobar';
+import { annuityGlossary } from '@/features/annuity/glossary';
 
 // Default/fallback data when no content is set
-const defaultData = {
-  title: 'Documentation',
-  sections: [
-    {
-      title: 'Getting Started',
-      description: 'Learn how to get started with this application.',
-      links: [
-        {
-          title: 'Installation Guide',
-          url: '#'
-        }
-      ]
-    }
-  ]
-};
+const defaultData = annuityGlossary;
 
 export function InfoSidebar({ ...props }: React.ComponentProps<typeof Infobar>) {
   const { content } = useInfobar();

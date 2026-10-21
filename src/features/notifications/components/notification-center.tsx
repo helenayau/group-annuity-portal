@@ -14,6 +14,9 @@ const MAX_VISIBLE = 5;
 
 const actionRoutes: Record<string, string> = {
   'view-annuity': '/',
+  'view-income': '/income',
+  'view-documents': '/documents',
+  'view-beneficiaries': '/beneficiaries',
   'view-profile': '/profile'
 };
 
