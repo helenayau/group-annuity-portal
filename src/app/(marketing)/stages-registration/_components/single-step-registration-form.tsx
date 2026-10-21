@@ -16,8 +16,8 @@ import { registrationDefaults, registrationIntro, registrationSchema } from './r
 import { RegistrationHeading } from './registration-shell';
 import { RegistrationSuccess } from './registration-success';
 
-/** h asked for a narrower column on this version only: the fields and
- *  consent copy share this measure; the line under the h1 keeps its own. */
+/** h asked for a narrower column on this version only: the supporting
+ *  line, fields and consent copy all share this measure. */
 const SINGLE_PAGE_WIDTH = 'max-w-[420px]';
 
 /**
@@ -48,7 +48,7 @@ export function SingleStepRegistrationForm() {
 
   return (
     <>
-      <RegistrationHeading description={registrationIntro} />
+      <RegistrationHeading description={registrationIntro} copyClassName={SINGLE_PAGE_WIDTH} />
 
       <form
         onSubmit={(e) => {
