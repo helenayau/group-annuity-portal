@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import { pruClass } from './registration-theme';
 import { SiteHeader } from './site-header';
 
@@ -18,11 +19,18 @@ export function RegistrationShell({ children }: { children: React.ReactNode }) {
 }
 
 /** The h1 + supporting line, held constant across both arms. */
-export function RegistrationHeading({ description }: { description: string }) {
+export function RegistrationHeading({
+  description,
+  copyClassName
+}: {
+  description: string;
+  /** Overrides the supporting line's measure, e.g. to match narrower fields. */
+  copyClassName?: string;
+}) {
   return (
     <header>
       <h1 className={pruClass.h1}>First, let&apos;s create your account</h1>
-      <p className={`mt-5 ${pruClass.copy}`}>{description}</p>
+      <p className={cn('mt-5', pruClass.copy, copyClassName)}>{description}</p>
     </header>
   );
 }

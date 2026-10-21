@@ -15,7 +15,10 @@ import {
 import { registrationDefaults, registrationIntro, registrationSchema } from './registration-schema';
 import { RegistrationHeading } from './registration-shell';
 import { RegistrationSuccess } from './registration-success';
-import { pruClass } from './registration-theme';
+
+/** h asked for a narrower column on this version only: the supporting
+ *  line, fields and consent copy all share this measure. */
+const SINGLE_PAGE_WIDTH = 'max-w-[420px]';
 
 /**
  * Variant A of the registration A/B test — every field on one page, exactly
@@ -45,7 +48,7 @@ export function SingleStepRegistrationForm() {
 
   return (
     <>
-      <RegistrationHeading description={registrationIntro} />
+      <RegistrationHeading description={registrationIntro} copyClassName={SINGLE_PAGE_WIDTH} />
 
       <form
         onSubmit={(e) => {
@@ -54,16 +57,12 @@ export function SingleStepRegistrationForm() {
           void form.handleSubmit();
         }}
         noValidate
-        className={`mt-12 flex flex-col gap-8 ${pruClass.formWidth}`}
+        className={`mt-12 flex w-full flex-col gap-8 ${SINGLE_PAGE_WIDTH}`}
         data-registration-variant='single-page'
       >
-        {/* h asked for narrower fields on this version only; the consent
-            copy below keeps the full column. */}
-        <div className='flex w-full max-w-[360px] flex-col gap-8'>
-          <NameFields form={form} />
-          <ContactFields form={form} />
-          <PasswordFieldSection form={form} />
-        </div>
+        <NameFields form={form} />
+        <ContactFields form={form} />
+        <PasswordFieldSection form={form} />
 
         <div className='mt-4 flex flex-col gap-6'>
           <ConsentField form={form} />
