@@ -11,27 +11,27 @@ import {
   ChartTooltip,
   ChartTooltipContent
 } from '@/components/ui/chart';
-import { fundAllocation } from '@/constants/mock-api-annuity';
+import { indexStrategies } from '@/constants/mock-api-annuity';
 
-const sortedFundAllocation = [...fundAllocation].sort((a, b) => b.percent - a.percent);
-
-const chartData = sortedFundAllocation.map((item, index) => ({
-  category: item.category,
-  percent: item.percent,
+const chartData = indexStrategies.map((strategy, index) => ({
+  strategy: strategy.name,
+  percent: strategy.allocationPercent,
   fill: `var(--chart-${index + 1})`
 }));
 
-const chartConfig = sortedFundAllocation.reduce((config, item, index) => {
-  config[item.category] = { label: item.category, color: `var(--chart-${index + 1})` };
+const chartConfig = indexStrategies.reduce((config, strategy, index) => {
+  config[strategy.name] = { label: strategy.name, color: `var(--chart-${index + 1})` };
   return config;
 }, {} as ChartConfig);
 
-export function FundAllocationPie() {
+export function StrategyAllocationPie() {
   return (
     <Card className='flex h-full flex-col'>
       <CardHeader className='items-center pb-0'>
-        <CardTitle>Fund Allocation</CardTitle>
-        <CardDescription>How your annuity balance is invested</CardDescription>
+        <CardTitle>Strategy Allocation</CardTitle>
+        <CardDescription>
+          How your account value is split across crediting strategies
+        </CardDescription>
       </CardHeader>
       <CardContent className='flex flex-1 flex-col items-center justify-center pb-0'>
         <ChartContainer
@@ -42,7 +42,7 @@ export function FundAllocationPie() {
             <ChartTooltip
               content={
                 <ChartTooltipContent
-                  nameKey='category'
+                  nameKey='strategy'
                   hideLabel
                   valueFormatter={(value) => `${value}%`}
                 />
@@ -51,7 +51,7 @@ export function FundAllocationPie() {
             <Pie
               data={chartData}
               dataKey='percent'
-              nameKey='category'
+              nameKey='strategy'
               innerRadius={60}
               cornerRadius={8}
               paddingAngle={4}
@@ -60,8 +60,8 @@ export function FundAllocationPie() {
               itemSorter={null}
               content={
                 <ChartLegendContent
-                  nameKey='category'
-                  className='flex-wrap gap-x-6 gap-y-2 text-base whitespace-nowrap'
+                  nameKey='strategy'
+                  className='flex-wrap gap-x-6 gap-y-2 text-sm'
                 />
               }
             />

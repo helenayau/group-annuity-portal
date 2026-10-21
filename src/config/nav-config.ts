@@ -10,11 +10,39 @@ export const navGroups: NavGroup[] = [
     label: '',
     items: [
       {
-        title: 'My Annuity',
+        title: 'Overview',
         url: '/',
         icon: 'piggyBank',
         isActive: false,
-        shortcut: ['a', 'n'],
+        shortcut: ['o', 'o'],
+        items: []
+      },
+      {
+        title: 'Index Strategies',
+        url: '/strategies',
+        icon: 'trendingUp',
+        shortcut: ['s', 's'],
+        items: []
+      },
+      {
+        title: 'Income & Withdrawals',
+        url: '/income',
+        icon: 'billing',
+        shortcut: ['i', 'i'],
+        items: []
+      },
+      {
+        title: 'Beneficiaries',
+        url: '/beneficiaries',
+        icon: 'teams',
+        shortcut: ['b', 'b'],
+        items: []
+      },
+      {
+        title: 'Documents',
+        url: '/documents',
+        icon: 'post',
+        shortcut: ['d', 'd'],
         items: []
       },
       {

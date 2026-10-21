@@ -24,13 +24,13 @@ const mockNotifications: Notification[] = [
   {
     id: '1',
     title: 'Payment deposited',
-    body: 'Your guaranteed monthly income of $2,150 was deposited on Sep 1, 2026.',
+    body: 'Your guaranteed monthly income of $2,150 ($1,843.62 after tax withholding) was deposited on Oct 1, 2026.',
     status: 'unread',
     createdAt: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
     actions: [
       {
-        id: 'view-annuity',
-        label: 'View annuity',
+        id: 'view-income',
+        label: 'View payments',
         type: 'redirect',
         style: 'primary'
       }
@@ -39,13 +39,13 @@ const mockNotifications: Notification[] = [
   {
     id: '2',
     title: 'Statement ready',
-    body: 'Your Q3 annuity statement is ready to view.',
+    body: 'Your Q3 2026 quarterly statement is ready to view.',
     status: 'unread',
     createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
     actions: [
       {
-        id: 'view-annuity',
-        label: 'View annuity',
+        id: 'view-documents',
+        label: 'View statement',
         type: 'redirect',
         style: 'primary'
       }
@@ -59,7 +59,7 @@ const mockNotifications: Notification[] = [
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
     actions: [
       {
-        id: 'view-annuity',
+        id: 'view-beneficiaries',
         label: 'View beneficiaries',
         type: 'redirect',
         style: 'primary'
@@ -84,13 +84,13 @@ const mockNotifications: Notification[] = [
   {
     id: '5',
     title: 'Next payment scheduled',
-    body: 'Your next guaranteed income payment is scheduled for Oct 1, 2026.',
+    body: 'Your next guaranteed income payment is scheduled for Nov 1, 2026.',
     status: 'read',
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 3).toISOString(),
     actions: [
       {
-        id: 'view-annuity',
-        label: 'View annuity',
+        id: 'view-income',
+        label: 'View payments',
         type: 'redirect',
         style: 'primary'
       }
