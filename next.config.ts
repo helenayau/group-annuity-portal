@@ -23,6 +23,14 @@ const baseConfig: NextConfig = {
       }
     ]
   },
+  // The registration A/B links moved to /single-page and /multi-step; keep
+  // the old paths working for any participant links already sent out.
+  async redirects() {
+    return [
+      { source: '/create-account', destination: '/single-page', permanent: false },
+      { source: '/create-account-multi-step', destination: '/multi-step', permanent: false }
+    ];
+  },
   transpilePackages: ['geist'],
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production'

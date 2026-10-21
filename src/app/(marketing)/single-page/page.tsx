@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 /**
  * Variant A of the registration A/B test: all fields on a single page.
- * Variant B lives at `/create-account-multi-step`.
+ * Variant B lives at `/multi-step`.
  *
  * The h1 and its supporting line come from the form, which swaps both for the
  * confirmation screen once the account is created.

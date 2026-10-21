@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 /**
  * Variant B of the registration A/B test: the same fields as variant A,
- * paginated across three steps. Variant A lives at `/create-account`.
+ * paginated across three steps. Variant A lives at `/single-page`.
  *
  * The h1 and its supporting line come from the form here rather than from the
  * page, because the supporting line is the current step's own copy.
