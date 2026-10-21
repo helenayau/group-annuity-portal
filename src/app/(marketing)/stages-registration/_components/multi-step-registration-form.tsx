@@ -163,7 +163,7 @@ export function MultiStepRegistrationForm() {
       >
         <StepIndicator currentStep={currentStep} />
 
-        {currentStep === 1 && <NameFields form={form} stacked />}
+        {currentStep === 1 && <NameFields form={form} />}
         {currentStep === 2 && <ContactFields form={form} />}
         {currentStep === 3 && (
           <div className='flex flex-col gap-8'>
