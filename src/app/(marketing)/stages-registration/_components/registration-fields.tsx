@@ -77,11 +77,14 @@ function PruTextInput({
   );
 }
 
+/** `stacked` puts last name under first name at the full field width, as the
+ *  three-step arm's contact and password steps are laid out. */
 export const NameFields = withForm({
   ...sectionShape,
-  render: function NameFieldsRender({ form }) {
+  props: {} as { stacked?: boolean },
+  render: function NameFieldsRender({ form, stacked }) {
     return (
-      <div className='grid gap-6 sm:grid-cols-2 sm:gap-5'>
+      <div className={stacked ? 'grid gap-6' : 'grid gap-6 sm:grid-cols-2 sm:gap-5'}>
         <form.Field
           name='firstName'
           children={(field) => (

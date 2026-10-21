@@ -40,5 +40,9 @@ export const pruClass = {
   formWidth: 'w-full max-w-[560px]',
   /** Pill CTA — solid blue when enabled, pale blue when disabled. */
   cta: 'h-11 w-full max-w-[200px] rounded-full bg-[#0066CC] px-6 text-base font-semibold text-white transition-colors hover:bg-[#00539E] disabled:pointer-events-none disabled:bg-[#99C2EB] disabled:text-white disabled:opacity-100',
+  /** Secondary pill CTA (Back): the same shape and size as `cta`, outlined
+   *  in the CTA blue on white. Pinned light under `dark:` like `input`. */
+  ctaSecondary:
+    'h-11 w-full max-w-[200px] rounded-full border-2 border-[#0066CC] bg-white px-6 text-base font-semibold text-[#0066CC] transition-colors hover:border-[#00539E] hover:bg-[#E2F4FF] hover:text-[#00539E] dark:border-[#0066CC] dark:bg-white dark:hover:bg-[#E2F4FF]',
   link: 'font-semibold text-[#0066CC] underline-offset-2 hover:underline'
 } as const;

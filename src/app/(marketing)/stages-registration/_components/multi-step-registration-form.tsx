@@ -3,7 +3,6 @@
 import * as React from 'react';
 import { revalidateLogic } from '@tanstack/react-form';
 import { Button } from '@/components/ui/button';
-import { Icons } from '@/components/icons';
 import { useAppForm } from '@/lib/form';
 import { useFormStepper } from '@/hooks/use-stepper';
 import {
@@ -164,7 +163,7 @@ export function MultiStepRegistrationForm() {
       >
         <StepIndicator currentStep={currentStep} />
 
-        {currentStep === 1 && <NameFields form={form} />}
+        {currentStep === 1 && <NameFields form={form} stacked />}
         {currentStep === 2 && <ContactFields form={form} />}
         {currentStep === 3 && (
           <div className='flex flex-col gap-8'>
@@ -174,15 +173,14 @@ export function MultiStepRegistrationForm() {
           </div>
         )}
 
-        <div className='flex items-center gap-4'>
+        {/* Both pills may shrink below their 200px cap so they share a phone-width row. */}
+        <div className='flex items-center gap-4 *:min-w-0 *:shrink'>
           {!isFirstStep && (
             <Button
               type='button'
-              variant='ghost'
               onClick={() => handleCancelOrBack()}
-              className='h-11 gap-1 rounded-full px-5 text-base font-semibold text-[#001F45] hover:bg-[#001F45]/5'
+              className={pruClass.ctaSecondary}
             >
-              <Icons.chevronLeft className='size-4' aria-hidden />
               Back
             </Button>
           )}
