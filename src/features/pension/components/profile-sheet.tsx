@@ -17,9 +17,17 @@ import {
 } from '@/components/ui/card';
 import { FieldGroup } from '@/components/ui/field';
 import { Label } from '@/components/ui/label';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle
+} from '@/components/ui/sheet';
 import { Switch } from '@/components/ui/switch';
 import type { Participant } from '@/constants/mock-api-pension';
 import { useAppForm } from '@/lib/form';
+import { copy } from '../copy';
 import { usePension } from '../pension-context';
 
 const contactSchema = z.object({
@@ -55,7 +63,7 @@ function ContactForm({
       }}
     >
       <CardContent>
-        <FieldGroup className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
+        <FieldGroup className='grid grid-cols-1 gap-4'>
           <form.AppField
             name='email'
             children={(field) => <field.TextField label='Email address' type='email' required />}
@@ -112,7 +120,7 @@ function ContactCard() {
         />
       ) : (
         <CardContent>
-          <dl className='grid grid-cols-1 gap-3 sm:grid-cols-2'>
+          <dl className='grid grid-cols-1 gap-3'>
             {fields.map(([label, value]) => (
               <div key={label}>
                 <dt className='text-sm font-medium'>{label}</dt>
@@ -201,12 +209,26 @@ function PasswordCard() {
   );
 }
 
-export function PensionProfile() {
+export function ProfileSheet({
+  open,
+  onOpenChange
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
   return (
-    <div className='flex flex-col gap-4'>
-      <ContactCard />
-      <PreferencesCard />
-      <PasswordCard />
-    </div>
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent className='w-full overflow-y-auto sm:max-w-lg'>
+        <SheetHeader>
+          <SheetTitle>Profile</SheetTitle>
+          <SheetDescription>{copy.otherDetails.body}</SheetDescription>
+        </SheetHeader>
+        <div className='flex flex-col gap-4 px-4 pb-4'>
+          <ContactCard />
+          <PreferencesCard />
+          <PasswordCard />
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 }
