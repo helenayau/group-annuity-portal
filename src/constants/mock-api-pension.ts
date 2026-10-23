@@ -101,26 +101,27 @@ export interface PensionPayment {
   status: PensionPaymentStatus;
 }
 
-// Mirrors the mockup's rows: the full $320 payment by direct deposit to *****4411.
-const paymentHistory: Array<[string, PensionPaymentStatus]> = [
-  ['08/15/2024', 'processing'],
-  ['07/15/2024', 'transmitted'],
-  ['06/14/2024', 'transmitted'],
-  ['05/15/2024', 'transmitted'],
-  ['04/15/2024', 'transmitted'],
-  ['03/15/2024', 'transmitted'],
-  ['02/15/2024', 'transmitted'],
-  ['01/12/2024', 'transmitted']
+const paymentDates = [
+  '08/15/2024',
+  '07/15/2024',
+  '06/14/2024',
+  '05/15/2024',
+  '04/15/2024',
+  '03/15/2024'
 ];
 
-export const pensionPayments: PensionPayment[] = paymentHistory.map(([date, status]) => ({
-  id: date,
-  date,
-  method: 'Direct deposit',
-  accountLast4: '4411',
-  netAmount: 320,
-  status
-}));
+export const pensionPayments: PensionPayment[] = paymentDates.flatMap((date, dateIndex) =>
+  depositAccounts.map((account, accountIndex) => ({
+    id: `${date}-${account.id}`,
+    date,
+    method: 'Direct deposit' as const,
+    accountLast4: account.accountLast4,
+    netAmount: account.amount,
+    status: (dateIndex === 0 && accountIndex === 0
+      ? 'processing'
+      : 'transmitted') as PensionPaymentStatus
+  }))
+);
 
 export interface PensionDocument {
   id: string;

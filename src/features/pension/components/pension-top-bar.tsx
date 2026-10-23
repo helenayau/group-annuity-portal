@@ -5,34 +5,31 @@ import { toast } from 'sonner';
 import { Icons } from '@/components/icons';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { copy } from '../copy';
-import { usePension, usePensionActions } from '../pension-context';
-import { useLayoutOption, withLayout } from '../layout-option';
+import { usePension } from '../pension-context';
 
 export function PensionTopBar() {
   const { participant } = usePension();
-  const { goToProfile } = usePensionActions();
-  const [layout] = useLayoutOption();
-  // Home stays inside whichever layout option is being reviewed.
-  const home = withLayout('/pension', layout);
 
   return (
     <header className='bg-background border-b'>
       <div className='mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 md:px-6'>
-        <Link href={home} className='flex items-center gap-2 font-medium'>
+        <Link href='/pension' className='flex items-center gap-2 font-semibold'>
           <Icons.piggyBank className='text-primary size-5' />
           <span className='hidden sm:inline'>Pension Center</span>
         </Link>
         <nav aria-label='Account' className='flex items-center gap-1'>
-          <Link href={home} className={buttonVariants({ variant: 'ghost', size: 'sm' })}>
+          <Link href='/pension' className={buttonVariants({ variant: 'ghost', size: 'sm' })}>
             <Icons.dashboard />
-            {copy.home}
+            Home
           </Link>
           <Separator orientation='vertical' className='h-5' />
-          <Button variant='ghost' size='sm' onClick={goToProfile}>
+          <Link
+            href='/pension/profile'
+            className={buttonVariants({ variant: 'ghost', size: 'sm' })}
+          >
             <Icons.account />
             {participant.firstName}
-          </Button>
+          </Link>
           <Separator orientation='vertical' className='h-5' />
           <Button
             variant='ghost'
@@ -42,7 +39,7 @@ export function PensionTopBar() {
             }
           >
             <Icons.logout />
-            {copy.logOut}
+            Log out
           </Button>
         </nav>
       </div>
