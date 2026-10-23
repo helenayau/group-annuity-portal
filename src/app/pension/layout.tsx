@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { AccountHeader } from '@/features/pension/components/account-header';
 import { LayoutSwitcher } from '@/features/pension/components/layout-switcher';
 import { PensionAlerts } from '@/features/pension/components/pension-alerts';
 import { PensionDialogs } from '@/features/pension/components/pension-dialogs';
@@ -28,6 +29,7 @@ export default function PensionLayout({ children }: { children: React.ReactNode 
           </div>
         </div>
         <PensionTopBar />
+        <AccountHeader />
         <main
           id='main-content'
           className='mx-auto w-full max-w-6xl flex-1 px-4 py-6 md:px-6 md:py-8'

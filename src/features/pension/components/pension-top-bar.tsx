@@ -1,26 +1,25 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { toast } from 'sonner';
 import { Icons } from '@/components/icons';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { copy } from '../copy';
 import { usePension, usePensionActions } from '../pension-context';
-import { pensionLayouts } from './layout-switcher';
+import { useLayoutOption, withLayout } from '../layout-option';
 
 export function PensionTopBar() {
   const { participant } = usePension();
   const { goToProfile } = usePensionActions();
-  const pathname = usePathname();
+  const [layout] = useLayoutOption();
   // Home stays inside whichever layout option is being reviewed.
-  const home = pensionLayouts.find((layout) => layout.href === pathname)?.href ?? '/pension';
+  const home = withLayout('/pension', layout);
 
   return (
     <header className='bg-background border-b'>
       <div className='mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 md:px-6'>
-        <Link href={home} className='flex items-center gap-2 font-semibold'>
+        <Link href={home} className='flex items-center gap-2 font-medium'>
           <Icons.piggyBank className='text-primary size-5' />
           <span className='hidden sm:inline'>Pension Center</span>
         </Link>
@@ -32,7 +31,7 @@ export function PensionTopBar() {
           <Separator orientation='vertical' className='h-5' />
           <Button variant='ghost' size='sm' onClick={goToProfile}>
             <Icons.account />
-            {participant.firstName.toUpperCase()}
+            {participant.firstName}
           </Button>
           <Separator orientation='vertical' className='h-5' />
           <Button

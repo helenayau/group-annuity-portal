@@ -21,7 +21,7 @@ export function DocumentList({ documents }: { documents: PensionDocument[] }) {
             <Icons.fileTypePdf className='text-muted-foreground mt-0.5 size-5 shrink-0' />
             <div>
               <div className='text-sm font-medium'>{doc.title}</div>
-              <div className='text-muted-foreground text-xs'>{doc.date}</div>
+              <div className='text-muted-foreground text-sm'>{doc.date}</div>
               <p className='text-muted-foreground mt-1 text-sm'>{doc.description}</p>
             </div>
           </div>

@@ -1,7 +1,7 @@
-import { OverviewLayout } from '@/features/pension/components/layouts/overview-layout';
+import { AccountDetailsTab } from '@/features/pension/components/tabs/account-details';
 
-export const metadata = { title: 'Overview' };
+export const metadata = { title: 'Account details' };
 
 export default function Page() {
-  return <OverviewLayout />;
+  return <AccountDetailsTab />;
 }
