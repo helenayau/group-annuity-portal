@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { pillButton } from '../styles';
 
 export function OtherDetailsCard() {
   return (
@@ -14,7 +16,7 @@ export function OtherDetailsCard() {
       <CardFooter>
         <Link
           href='/pension/profile'
-          className={buttonVariants({ variant: 'outline', size: 'sm' })}
+          className={cn(buttonVariants({ variant: 'outline', size: 'sm' }), pillButton)}
         >
           Go to profile
         </Link>

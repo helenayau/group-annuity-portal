@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/card';
 import { grossMonthlyPayment, pensionPlan } from '@/constants/mock-api-pension';
 import { downloadPensionIncomeLetter } from '../documents';
+import { pillButton } from '../styles';
 import { usePension } from '../pension-context';
 
 export function IncomeLetterCard() {
@@ -34,6 +35,7 @@ export function IncomeLetterCard() {
         <Button
           variant='outline'
           size='sm'
+          className={pillButton}
           onClick={() => {
             downloadPensionIncomeLetter(participant, accounts, grossMonthlyPayment);
             toast.success('Income verification letter downloaded');

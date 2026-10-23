@@ -18,6 +18,8 @@ import {
   type PensionDocumentCategory
 } from '@/constants/mock-api-pension';
 import { downloadPensionDocument } from '../documents';
+import { cn } from '@/lib/utils';
+import { pillButton } from '../styles';
 import { usePension } from '../pension-context';
 
 const categories = Object.keys(pensionDocumentCategories) as PensionDocumentCategory[];
@@ -56,7 +58,7 @@ function DocumentsDialog({
               <Button
                 variant='outline'
                 size='sm'
-                className='self-start sm:self-center'
+                className={cn(pillButton, 'self-start sm:self-center')}
                 onClick={() => {
                   downloadPensionDocument(doc, participant);
                   toast.success(`${doc.title} downloaded`);
@@ -89,7 +91,12 @@ export function EDocumentsGrid() {
               {details.description}
             </CardContent>
             <CardFooter>
-              <Button variant='outline' size='sm' onClick={() => setOpen(category)}>
+              <Button
+                variant='outline'
+                size='sm'
+                className={pillButton}
+                onClick={() => setOpen(category)}
+              >
                 {details.actionLabel}
               </Button>
             </CardFooter>

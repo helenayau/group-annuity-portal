@@ -34,6 +34,7 @@ import {
   type PensionPaymentStatus
 } from '@/constants/mock-api-pension';
 import { formatCurrencyCents } from '@/features/annuity/utils';
+import { pillButton } from '../styles';
 
 const INITIAL_ROWS = 3;
 
@@ -198,7 +199,12 @@ export function PensionPaymentHistory() {
         </Table>
       </CardContent>
       <CardFooter>
-        <Button variant='outline' size='sm' onClick={() => setShowAll(!showAll)}>
+        <Button
+          variant='outline'
+          size='sm'
+          className={pillButton}
+          onClick={() => setShowAll(!showAll)}
+        >
           {showAll ? 'Show fewer' : 'View all'}
         </Button>
       </CardFooter>

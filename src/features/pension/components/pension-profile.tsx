@@ -21,6 +21,7 @@ import { Switch } from '@/components/ui/switch';
 import type { Participant } from '@/constants/mock-api-pension';
 import { useAppForm } from '@/lib/form';
 import { usePension } from '../pension-context';
+import { pillButton } from '../styles';
 
 const contactSchema = z.object({
   email: z.email('Enter a valid email address'),
@@ -94,7 +95,12 @@ function ContactCard() {
         <CardDescription>How the plan reaches you about your payments</CardDescription>
         {!isEditing && (
           <CardAction>
-            <Button variant='outline' size='sm' onClick={() => setIsEditing(true)}>
+            <Button
+              variant='outline'
+              size='sm'
+              className={pillButton}
+              onClick={() => setIsEditing(true)}
+            >
               <Icons.edit />
               Edit
             </Button>
@@ -193,7 +199,7 @@ function PasswordCard() {
         </CardDescription>
       </CardHeader>
       <CardFooter>
-        <Button variant='outline' size='sm' disabled>
+        <Button variant='outline' size='sm' className={pillButton} disabled>
           Change password
         </Button>
       </CardFooter>

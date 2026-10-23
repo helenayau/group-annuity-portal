@@ -1,0 +1,35 @@
+/* Palette from the pension portal mockup: light blue page, white cards and
+   header bands, blue links and actions. It applies only while a /pension
+   page is on screen (its layout renders [data-pension-theme]), so dialogs
+   portalled to <body> pick it up and the rest of the app is unaffected.
+   The .dark selector keeps the mockup palette even if dark mode is set. */
+html:has([data-pension-theme]),
+html.dark:has([data-pension-theme]) {
+  color-scheme: light;
+  --background: oklch(0.973 0.011 236);
+  --foreground: oklch(0.22 0.01 250);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.22 0.01 250);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.22 0.01 250);
+  --primary: oklch(0.5 0.13 245);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.94 0.02 238);
+  --secondary-foreground: oklch(0.3 0.06 245);
+  --muted: oklch(0.955 0.012 236);
+  --muted-foreground: oklch(0.45 0.015 250);
+  --accent: oklch(0.94 0.02 238);
+  --accent-foreground: oklch(0.3 0.06 245);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.9 0.015 240);
+  --input: oklch(0.88 0.015 240);
+  --ring: oklch(0.5 0.13 245);
+}
+
+/* Mockup cards are solid white: actions sit inside the card, not in a
+   tinted footer band. */
+[data-pension-theme] [data-slot='card-footer'] {
+  border-top-width: 0;
+  background-color: transparent;
+  padding-top: 0;
+}

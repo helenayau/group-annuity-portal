@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { downloadWithholdingForm } from '../documents';
+import { pillButton } from '../styles';
 import { usePension } from '../pension-context';
 
 export function TaxWithholdingFormsCard() {
@@ -21,6 +22,7 @@ export function TaxWithholdingFormsCard() {
         <Button
           variant='outline'
           size='sm'
+          className={pillButton}
           onClick={() => {
             downloadWithholdingForm('federal', participant);
             toast.success('Federal withholding form downloaded');
@@ -31,6 +33,7 @@ export function TaxWithholdingFormsCard() {
         <Button
           variant='outline'
           size='sm'
+          className={pillButton}
           onClick={() => {
             downloadWithholdingForm('state', participant);
             toast.success('State withholding form downloaded');

@@ -15,7 +15,7 @@ export function AccountHeader() {
   const pathname = usePathname();
 
   return (
-    <div className='bg-background border-b'>
+    <div className='bg-card border-b'>
       <div className='mx-auto max-w-6xl px-4 pt-6 md:px-6 md:pt-8'>
         <p className='text-muted-foreground text-sm'>
           Your retirement account as of {pensionPlan.asOfDate}

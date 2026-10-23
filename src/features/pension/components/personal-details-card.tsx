@@ -17,6 +17,7 @@ import {
 import { FieldGroup } from '@/components/ui/field';
 import type { Participant } from '@/constants/mock-api-pension';
 import { useAppForm } from '@/lib/form';
+import { pillButton } from '../styles';
 import { usePension } from '../pension-context';
 
 const personalSchema = z.object({
@@ -125,7 +126,12 @@ export function PersonalDetailsCard() {
         </address>
       </CardContent>
       <CardFooter>
-        <Button variant='outline' size='sm' onClick={() => setIsEditing(true)}>
+        <Button
+          variant='outline'
+          size='sm'
+          className={pillButton}
+          onClick={() => setIsEditing(true)}
+        >
           Edit personal details
         </Button>
       </CardFooter>

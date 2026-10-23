@@ -19,8 +19,8 @@ export const metadata: Metadata = {
 export default function PensionLayout({ children }: { children: React.ReactNode }) {
   return (
     <PensionProvider>
-      <div className='bg-muted/40 flex min-h-svh flex-col'>
-        <div className='bg-background'>
+      <div data-pension-theme className='bg-background flex min-h-svh flex-col'>
+        <div className='bg-card'>
           <div className='mx-auto max-w-6xl px-4 pt-4 md:px-6'>
             <PensionAlerts />
           </div>

@@ -18,6 +18,7 @@ import { FieldGroup } from '@/components/ui/field';
 import { grossMonthlyPayment, type DepositAccount } from '@/constants/mock-api-pension';
 import { formatCurrencyCents } from '@/features/annuity/utils';
 import { useAppForm } from '@/lib/form';
+import { pillButton } from '../styles';
 import { usePension } from '../pension-context';
 
 const amountSchema = z
@@ -118,7 +119,12 @@ export function GrossPaymentsCard() {
         <p className='text-muted-foreground mt-1 text-sm'>Paid to {accounts.length} account(s)</p>
       </CardContent>
       <CardFooter>
-        <Button variant='outline' size='sm' onClick={() => setIsEditing(true)}>
+        <Button
+          variant='outline'
+          size='sm'
+          className={pillButton}
+          onClick={() => setIsEditing(true)}
+        >
           Edit payment settings
         </Button>
       </CardFooter>
