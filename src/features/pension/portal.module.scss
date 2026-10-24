@@ -49,9 +49,12 @@
   color: var(--cds-text-secondary);
 }
 
+// The plan name is shown in capitals, as on the mockup. CSS does the
+// casing so the source text (and what screen readers get) stays mixed case.
 .title {
   margin-block: $spacing-02;
   @include type-style('heading-04');
+  text-transform: uppercase;
 }
 
 .tabs {
