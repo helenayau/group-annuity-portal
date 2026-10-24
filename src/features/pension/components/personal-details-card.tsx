@@ -21,7 +21,7 @@ import type { Participant } from '@/constants/mock-api-pension';
 import { useAppForm } from '@/lib/form';
 import { cn } from '@/lib/utils';
 import { pillButton } from '../styles';
-import { usePension } from '../pension-context';
+import { usePension, usePortalHref } from '../pension-context';
 
 const personalSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
@@ -130,6 +130,7 @@ function Address() {
 // Personal details tab: shows what's on file and sends you to the profile
 // page, where the details open ready to edit.
 export function PersonalDetailsCard() {
+  const portalHref = usePortalHref();
   return (
     <Card className='h-full'>
       <CardHeader>
@@ -140,7 +141,7 @@ export function PersonalDetailsCard() {
       </CardContent>
       <CardFooter>
         <Link
-          href='/pension/profile?edit=personal'
+          href={portalHref('/profile?edit=personal')}
           className={cn(buttonVariants({ variant: 'outline', size: 'sm' }), pillButton)}
         >
           Edit personal details

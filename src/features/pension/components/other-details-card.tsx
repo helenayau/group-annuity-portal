@@ -1,10 +1,14 @@
+'use client';
+
 import Link from 'next/link';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { usePortalHref } from '../pension-context';
 import { pillButton } from '../styles';
 
 export function OtherDetailsCard() {
+  const portalHref = usePortalHref();
   return (
     <Card className='h-full'>
       <CardHeader>
@@ -15,7 +19,7 @@ export function OtherDetailsCard() {
       </CardContent>
       <CardFooter>
         <Link
-          href='/pension/profile'
+          href={portalHref('/profile')}
           className={cn(buttonVariants({ variant: 'outline', size: 'sm' }), pillButton)}
         >
           Go to profile

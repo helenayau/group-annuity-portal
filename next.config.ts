@@ -1,5 +1,6 @@
 import type { NextConfig } from 'next';
 import { withSentryConfig } from '@sentry/nextjs';
+import { PORTAL_HOST } from './src/features/pension/portal-host';
 
 // Define the base Next.js configuration
 const baseConfig: NextConfig = {
@@ -26,6 +27,21 @@ const baseConfig: NextConfig = {
   transpilePackages: ['geist'],
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production'
+  },
+  // On its own domain the group annuity portal is served from the root:
+  // group-annuity-portal.vercel.app/profile shows /pension/profile.
+  async rewrites() {
+    const onPortalHost = [{ type: 'host' as const, value: PORTAL_HOST }];
+    return {
+      beforeFiles: [
+        { source: '/', has: onPortalHost, destination: '/pension' },
+        {
+          source: '/:path((?!pension|_next|monitoring|favicon\\.ico).*)',
+          has: onPortalHost,
+          destination: '/pension/:path'
+        }
+      ]
+    };
   }
 };
 

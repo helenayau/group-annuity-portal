@@ -13,18 +13,27 @@ interface PensionState {
   setParticipant: (participant: Participant) => void;
   accounts: DepositAccount[];
   setAccounts: (accounts: DepositAccount[]) => void;
+  basePath: string;
 }
 
 const PensionContext = createContext<PensionState | null>(null);
 
 // Lives in the /pension layout so edits made on one tab are still there
 // after switching to another.
-export function PensionProvider({ children }: { children: React.ReactNode }) {
+export function PensionProvider({
+  basePath,
+  children
+}: {
+  basePath: string;
+  children: React.ReactNode;
+}) {
   const [participant, setParticipant] = useState(initialParticipant);
   const [accounts, setAccounts] = useState(initialAccounts);
 
   return (
-    <PensionContext.Provider value={{ participant, setParticipant, accounts, setAccounts }}>
+    <PensionContext.Provider
+      value={{ participant, setParticipant, accounts, setAccounts, basePath }}
+    >
       {children}
     </PensionContext.Provider>
   );
@@ -34,4 +43,10 @@ export function usePension() {
   const context = useContext(PensionContext);
   if (!context) throw new Error('usePension must be used inside PensionProvider');
   return context;
+}
+
+// Portal links, e.g. portalHref('/profile'). '' is the Account details tab.
+export function usePortalHref() {
+  const { basePath } = usePension();
+  return (path: string) => basePath + path || '/';
 }

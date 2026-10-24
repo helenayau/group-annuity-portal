@@ -6,17 +6,18 @@ import { Icons } from '@/components/icons';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
-import { usePension } from '../pension-context';
+import { usePension, usePortalHref } from '../pension-context';
 
 export function PensionTopBar() {
   const { participant } = usePension();
+  const portalHref = usePortalHref();
 
   return (
     <header className='bg-card border-b'>
       <div className='mx-auto flex h-14 max-w-6xl items-center justify-end gap-4 px-4 md:px-6'>
         <nav aria-label='Account' className='flex items-center gap-1'>
           <Link
-            href='/pension'
+            href={portalHref('')}
             className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'text-primary')}
           >
             <Icons.dashboard />
@@ -24,7 +25,7 @@ export function PensionTopBar() {
           </Link>
           <Separator orientation='vertical' className='h-5' />
           <Link
-            href='/pension/profile'
+            href={portalHref('/profile')}
             className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'text-primary')}
           >
             <Icons.account />
