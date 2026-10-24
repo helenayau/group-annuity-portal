@@ -3,7 +3,6 @@
 import {
   Button,
   DataTable,
-  Link,
   Modal,
   Stack,
   Table,
@@ -13,6 +12,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  TableToolbar,
+  TableToolbarContent,
   Tag
 } from '@carbon/react';
 import { Fragment, useState } from 'react';
@@ -104,27 +105,22 @@ export function PaymentHistory() {
           getTableProps,
           getHeaderProps,
           getRowProps,
-          getTableContainerProps
+          getTableContainerProps,
+          getToolbarProps
         }) => (
           <TableContainer
             title='Payment history'
-            description={
-              <>
-                As of {pensionPlan.asOfDate}
-                <br />
-                <Link
-                  href='#payment-status'
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setStatusHelpOpen(true);
-                  }}
-                >
-                  What does status mean?
-                </Link>
-              </>
-            }
+            description={`As of ${pensionPlan.asOfDate}`}
             {...getTableContainerProps()}
           >
+            {/* Carbon puts table-level actions in the toolbar, right-aligned. */}
+            <TableToolbar {...getToolbarProps()} aria-label='Payment history actions'>
+              <TableToolbarContent>
+                <Button kind='ghost' size='lg' onClick={() => setStatusHelpOpen(true)}>
+                  What does status mean?
+                </Button>
+              </TableToolbarContent>
+            </TableToolbar>
             <div className={styles.tableScroll}>
               <Table {...getTableProps()} aria-label='Payment history'>
                 <TableHead>
