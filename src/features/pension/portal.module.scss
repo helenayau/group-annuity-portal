@@ -1,0 +1,261 @@
+// Styles for the Carbon-based group annuity portal. Layout comes from
+// Carbon's Grid, Column, Stack and ButtonSet; this file only adds spacing
+// and type from Carbon's Sass tokens. Colors are Carbon theme tokens, which
+// compile to --cds-* custom properties so they follow whichever Carbon theme
+// wraps the content. Checked by the Carbon token linter (bun lint:styles).
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/colors' as *;
+@use '@carbon/styles/scss/theme' as *;
+
+.root {
+  display: flex;
+  overflow-x: clip;
+  min-height: 100svh;
+  flex-direction: column;
+  background: $background;
+  color: $text-primary;
+  @include font-family('sans');
+}
+
+.headerActions {
+  margin-inline-start: auto;
+  display: flex;
+  align-items: center;
+}
+
+// Carbon's header is fixed, so keep keyboard-focused elements from
+// scrolling underneath it (WCAG 2.4.11, focus not obscured). 3rem is the
+// UI Shell header height.
+:global(html):has(.root) {
+  scroll-padding-block-start: 3rem;
+}
+
+// Carbon's Content adds the fixed-header offset; its default 2rem padding
+// is dropped so the white account band can run edge to edge.
+.content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 0;
+}
+
+.band {
+  padding-block-start: $spacing-07;
+  border-block-end: 1px solid $border-subtle-01;
+  background: $background;
+}
+
+.eyebrow {
+  @include type-style('body-compact-01');
+  color: $text-secondary;
+}
+
+// The plan name is shown in capitals, as on the mockup. CSS does the
+// casing so the source text (and what screen readers get) stays mixed case.
+.title {
+  margin-block: $spacing-02;
+  @include type-style('heading-04');
+  text-transform: uppercase;
+}
+
+.tabs {
+  margin-block-start: $spacing-06;
+}
+
+.panels {
+  // The mockup's light blue page, from Carbon's palette (blue-10) instead
+  // of g10's gray. Overriding the token keeps any component that reads
+  // $background in step; tiles stay white ($layer-01).
+  --cds-background: #{$blue-10};
+
+  flex: 1;
+  padding-block: $spacing-05 $spacing-09;
+  background-color: $background;
+}
+
+.pageTitle {
+  margin-block-end: $spacing-05;
+  @include type-style('heading-03');
+}
+
+.tile {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: $spacing-03;
+}
+
+.tileTitle {
+  @include type-style('heading-compact-02');
+}
+
+.tileBody {
+  flex: 1;
+  @include type-style('body-01');
+  color: $text-secondary;
+}
+
+// Tile actions are ghost buttons (Carbon: ghost buttons suit productive
+// cards). Ghost buttons carry 16px of inline padding, so the row is pulled
+// back by the same amount to line their labels up with the tile text, per
+// Carbon's ghost button alignment guidance. They wrap in narrow tiles.
+.tileActions {
+  display: flex;
+  flex-wrap: wrap;
+  margin-block-start: $spacing-03;
+  margin-inline-start: -$spacing-05;
+}
+
+.amount {
+  @include type-style('heading-05');
+  color: $text-primary;
+}
+
+.address {
+  font-style: normal;
+}
+
+.section {
+  margin-block-start: $spacing-07;
+}
+
+// Three definitions read better at Carbon's toggletip width (18rem) than
+// the definition tooltip's narrow default.
+.statusDefinition :global(.cds--popover-content) {
+  max-inline-size: 18rem;
+}
+
+.headerWithInfo {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-02;
+}
+
+// Carbon's tooltip wrappers are block line boxes taller than the 16px
+// icon, which leaves it sitting high; flex lets it center on the text.
+.headerWithInfo :global(.cds--popover-container),
+.headerWithInfo :global(.cds--tooltip-trigger__wrapper) {
+  display: flex;
+}
+
+// Icon-only tooltip trigger: no chrome, Carbon's secondary icon color and
+// focus ring.
+.infoTrigger {
+  display: inline-flex;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: $icon-secondary;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid $focus;
+    outline-offset: 1px;
+  }
+}
+
+// Payment history title and description use the same type and spacing as
+// the tile titles and body text.
+.tableContainer :global(.cds--data-table-header__title) {
+  @include type-style('heading-compact-02');
+}
+
+.tableContainer :global(.cds--data-table-header__description) {
+  margin-block-start: $spacing-03;
+  @include type-style('body-01');
+}
+
+.definitionList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-03;
+}
+
+.definitionItem {
+  display: block;
+}
+
+.tableScroll {
+  overflow-x: auto;
+}
+
+.tableActions {
+  padding: $spacing-03 0;
+  background: $layer;
+}
+
+// Passive "view" modals focus their content on open (data-modal-primary-
+// focus) instead of Carbon's fallback, the close button, whose tooltip
+// would pop up. The content isn't in the tab order (tabIndex -1), so it
+// needs no focus ring; Tab still moves on to the buttons.
+.modalBody:focus {
+  outline: none;
+}
+
+// Slimmer footer for the payment settings modal: Carbon's default modal
+// footer buttons are 4rem tall with 2rem of padding under the label. These
+// use the large button height (3rem) with the label centered. A deliberate,
+// scoped deviation from Carbon's modal footer spec.
+.compactFooter :global(.cds--modal-footer) {
+  block-size: 3rem;
+}
+
+.compactFooter :global(.cds--modal-footer .cds--btn:not(.cds--skeleton)) {
+  align-items: center;
+  block-size: 3rem;
+  padding-block: 0;
+}
+
+// Ghost buttons inside list cells: pull back by their 16px padding so the
+// label lines up with the column header text (Carbon's ghost alignment
+// rule), and up so it sits on the first line of the row's content.
+.cellAction {
+  margin-block-start: -$spacing-03;
+  margin-inline-start: -$spacing-05;
+}
+
+.formTotal {
+  display: flex;
+  justify-content: space-between;
+  @include type-style('body-compact-01');
+}
+
+// Description lists: <dt>/<dd> sit directly in the <dl> (no wrappers),
+// with Carbon spacing between each pair.
+.details dd:not(:last-child) {
+  margin-block-end: $spacing-05;
+}
+
+.label {
+  @include type-style('label-01');
+  color: $text-secondary;
+}
+
+.value {
+  margin-block-start: $spacing-02;
+  @include type-style('body-01');
+}
+
+.toggleRow {
+  padding-block: $spacing-05;
+  border-block-end: 1px solid $border-subtle-01;
+}
+
+.toggleRow:last-child {
+  border-block-end: 0;
+}
+
+.toasts {
+  position: fixed;
+  z-index: 9000;
+  top: $spacing-09;
+  right: $spacing-05;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-05;
+}

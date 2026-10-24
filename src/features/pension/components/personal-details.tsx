@@ -1,0 +1,204 @@
+'use client';
+
+import { Edit } from '@carbon/icons-react';
+import { Button, ButtonSet, Column, FormGroup, Grid, Stack, TextInput, Tile } from '@carbon/react';
+import { useStore } from '@tanstack/react-form';
+import Link from 'next/link';
+import { useState } from 'react';
+import * as z from 'zod';
+import type { Participant } from '@/constants/mock-api-pension';
+import { useAppForm } from '@/lib/form';
+import { usePension, usePortalHref } from '../pension-context';
+import styles from '../portal.module.scss';
+import { fieldError } from './field-error';
+import { useNotify } from './toasts';
+
+function Address({ participant }: { participant: Participant }) {
+  return (
+    <address className={`${styles.tileBody} ${styles.address}`}>
+      {participant.firstName} {participant.lastName}
+      <br />
+      {participant.addressLine1}
+      <br />
+      {participant.city}, {participant.state} {participant.zip}
+    </address>
+  );
+}
+
+// Personal details tab: what's on file, plus a pointer to the profile page.
+export function PersonalDetails() {
+  const { participant } = usePension();
+  const portalHref = usePortalHref();
+
+  return (
+    <Grid withRowGap>
+      <Column sm={4} md={4} lg={8}>
+        <Tile className={styles.tile}>
+          <h2 className={styles.tileTitle}>Personal details</h2>
+          <Address participant={participant} />
+          <div className={styles.tileActions}>
+            <Button as={Link} href={portalHref('/profile?edit=personal')} kind='ghost' size='sm'>
+              Edit personal details
+            </Button>
+          </div>
+        </Tile>
+      </Column>
+      <Column sm={4} md={4} lg={8}>
+        <Tile className={styles.tile}>
+          <h2 className={styles.tileTitle}>Need to update other details?</h2>
+          <p className={styles.tileBody}>
+            You can update your email address, password, and other preferences on your profile.
+          </p>
+          <div className={styles.tileActions}>
+            <Button as={Link} href={portalHref('/profile')} kind='ghost' size='sm'>
+              Go to profile
+            </Button>
+          </div>
+        </Tile>
+      </Column>
+    </Grid>
+  );
+}
+
+const personalSchema = z.object({
+  firstName: z.string().min(1, 'First name is required'),
+  lastName: z.string().min(1, 'Last name is required'),
+  addressLine1: z.string().min(1, 'Street address is required'),
+  city: z.string().min(1, 'City is required'),
+  state: z.string().regex(/^[A-Za-z]{2}$/, 'Use the 2-letter state code'),
+  zip: z.string().regex(/^\d{5}$/, 'ZIP codes are 5 digits')
+});
+
+// Grouped so screen readers announce each set of fields in context.
+const personalFieldGroups = [
+  {
+    legend: 'Name',
+    fields: [
+      { name: 'firstName', label: 'First name' },
+      { name: 'lastName', label: 'Last name' }
+    ]
+  },
+  {
+    legend: 'Mailing address',
+    fields: [
+      { name: 'addressLine1', label: 'Street address' },
+      { name: 'city', label: 'City' },
+      { name: 'state', label: 'State' },
+      { name: 'zip', label: 'ZIP' }
+    ]
+  }
+] as const;
+
+function PersonalDetailsForm({
+  participant,
+  onCancel,
+  onSave
+}: {
+  participant: Participant;
+  onCancel: () => void;
+  onSave: (participant: Participant) => void;
+}) {
+  const notify = useNotify();
+  const form = useAppForm({
+    defaultValues: {
+      firstName: participant.firstName,
+      lastName: participant.lastName,
+      addressLine1: participant.addressLine1,
+      city: participant.city,
+      state: participant.state,
+      zip: participant.zip
+    },
+    validators: { onSubmit: personalSchema },
+    onSubmit: ({ value }) => {
+      onSave({ ...participant, ...value, state: value.state.toUpperCase() });
+      notify('Personal details updated');
+    }
+  });
+  const isDirty = useStore(form.store, (state) => state.isDirty);
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        form.handleSubmit();
+      }}
+    >
+      <Grid>
+        <Column sm={4} md={6} lg={8}>
+          <Stack gap={7}>
+            {personalFieldGroups.map((group) => (
+              <FormGroup key={group.legend} legendText={group.legend}>
+                <Stack gap={7}>
+                  {group.fields.map(({ name, label }) => (
+                    <form.Field
+                      key={name}
+                      name={name}
+                      children={(field) => (
+                        <TextInput
+                          id={`personal-${name}`}
+                          labelText={label}
+                          value={field.state.value}
+                          invalid={field.state.meta.errors.length > 0}
+                          invalidText={fieldError(field.state.meta.errors)}
+                          onBlur={field.handleBlur}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                        />
+                      )}
+                    />
+                  ))}
+                </Stack>
+              </FormGroup>
+            ))}
+            <ButtonSet>
+              <Button type='button' kind='secondary' size='lg' onClick={onCancel}>
+                Cancel
+              </Button>
+              <Button type='submit' kind='primary' size='lg' disabled={!isDirty}>
+                Save changes
+              </Button>
+            </ButtonSet>
+          </Stack>
+        </Column>
+      </Grid>
+    </form>
+  );
+}
+
+// Profile page section. Opens in edit mode when arriving from
+// "Edit personal details".
+export function PersonalDetailsSection({ defaultEditing = false }: { defaultEditing?: boolean }) {
+  const { participant, setParticipant } = usePension();
+  const [isEditing, setIsEditing] = useState(defaultEditing);
+
+  return (
+    <Tile>
+      <Stack gap={5}>
+        <div className={styles.sectionHeader}>
+          <div>
+            <h2 className={styles.tileTitle}>Personal details</h2>
+            <p className={styles.tileBody}>
+              Your name and mailing address are used on tax forms and plan notices.
+            </p>
+          </div>
+          {!isEditing && (
+            <Button kind='ghost' size='sm' renderIcon={Edit} onClick={() => setIsEditing(true)}>
+              Edit
+            </Button>
+          )}
+        </div>
+        {isEditing ? (
+          <PersonalDetailsForm
+            participant={participant}
+            onCancel={() => setIsEditing(false)}
+            onSave={(updated) => {
+              setParticipant(updated);
+              setIsEditing(false);
+            }}
+          />
+        ) : (
+          <Address participant={participant} />
+        )}
+      </Stack>
+    </Tile>
+  );
+}

@@ -1,0 +1,43 @@
+# Runs on every pull request (and on pushes to main). Branch protection on
+# main can require this job to pass before merging.
+name: Checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_SENTRY_DISABLED: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.4
+      - run: bun install --frozen-lockfile
+
+      - name: Typecheck
+        run: bun run typecheck
+      - name: Code lint
+        run: bun run lint
+      - name: Carbon token lint
+        run: bun run lint:styles
+      - name: Format check
+        run: bun run format:check
+      - name: Build
+        run: bun run build
+
+      - name: Accessibility test (IBM Equal Access)
+        run: |
+          bunx playwright install --with-deps chromium
+          bun run start -p 3000 &
+          for i in $(seq 1 30); do curl -sf http://localhost:3000/pension > /dev/null && break; sleep 2; done
+          bun run test:a11y
+        env:
+          PORTAL_URL: http://localhost:3000
