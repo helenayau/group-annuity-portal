@@ -150,9 +150,15 @@
   }
 }
 
-// Payment history title uses the same type as the tile titles.
+// Payment history title and description use the same type and spacing as
+// the tile titles and body text.
 .tableContainer :global(.cds--data-table-header__title) {
   @include type-style('heading-compact-02');
+}
+
+.tableContainer :global(.cds--data-table-header__description) {
+  margin-block-start: $spacing-03;
+  @include type-style('body-01');
 }
 
 .definitionList {
