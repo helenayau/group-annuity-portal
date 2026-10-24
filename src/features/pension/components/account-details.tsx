@@ -70,9 +70,6 @@ export function AccountDetails() {
       <Column sm={4} md={8} lg={6}>
         <Tile className={styles.tile}>
           <h2 className={styles.tileTitle}>Income verification letter</h2>
-          <p className={styles.eyebrow}>
-            For {participant.firstName} {participant.lastName}
-          </p>
           <p className={styles.tileBody}>
             Your income verification letter documents your income as a participant of{' '}
             {pensionPlan.planName}.
