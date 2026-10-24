@@ -108,30 +108,10 @@
   margin-block-start: $spacing-07;
 }
 
-// Mirrors Carbon's data table header (.cds--data-table-header) with the
-// status button on the same line as the title.
-.tableHeader {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: $spacing-05;
-  padding: $spacing-05 $spacing-05 $spacing-06;
-  background: var(--cds-layer-01);
-}
-
-// Ghost button label lines up with the header's right padding edge.
-.tableHeader > :global(.cds--btn--ghost) {
-  margin-inline-end: -$spacing-05;
-}
-
-.tableTitle {
-  @include type-style('heading-03');
-  color: var(--cds-text-primary);
-}
-
-.tableDescription {
-  @include type-style('body-compact-01');
-  color: var(--cds-text-secondary);
+.headerWithInfo {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-02;
 }
 
 .tableScroll {

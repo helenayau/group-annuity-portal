@@ -1,5 +1,6 @@
 'use client';
 
+import { Information } from '@carbon/icons-react';
 import {
   Button,
   DataTable,
@@ -12,7 +13,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-  Tag
+  Tag,
+  Toggletip,
+  ToggletipButton,
+  ToggletipContent
 } from '@carbon/react';
 import { Fragment, useRef, useState } from 'react';
 import {
@@ -53,6 +57,34 @@ function StatusTag({ status }: { status: PensionPaymentStatus }) {
   );
 }
 
+// Status column header with Carbon's Toggletip: an info button that opens
+// the status definitions in place (toggletips suit longer explanations;
+// tooltips are for short labels).
+function StatusHeader() {
+  return (
+    <span className={styles.headerWithInfo}>
+      Status
+      <Toggletip align='bottom' autoAlign>
+        <ToggletipButton label='What does status mean?'>
+          <Information />
+        </ToggletipButton>
+        <ToggletipContent>
+          <dl className={styles.details}>
+            {(Object.keys(statusLabels) as PensionPaymentStatus[]).map((status) => (
+              <Fragment key={status}>
+                <dt>
+                  <StatusTag status={status} />
+                </dt>
+                <dd className={styles.value}>{statusDescriptions[status]}</dd>
+              </Fragment>
+            ))}
+          </dl>
+        </ToggletipContent>
+      </Toggletip>
+    </span>
+  );
+}
+
 const headers = [
   { key: 'netAmount', header: 'Net amount' },
   { key: 'method', header: 'Method' },
@@ -65,7 +97,6 @@ const headers = [
 export function PaymentHistory() {
   const [showAll, setShowAll] = useState(false);
   const [selected, setSelected] = useState<PensionPayment | null>(null);
-  const [statusHelpOpen, setStatusHelpOpen] = useState(false);
   // The button that opened a modal, so Carbon can return focus to it on close.
   const launcher = useRef<HTMLButtonElement | null>(null);
   const payments = showAll ? pensionPayments : pensionPayments.slice(0, INITIAL_ROWS);
@@ -110,30 +141,13 @@ export function PaymentHistory() {
           getRowProps,
           getTableContainerProps
         }) => (
-          <TableContainer {...getTableContainerProps()}>
-            {/* Header row in place of TableContainer's title: Carbon renders the
-                title as an <h2>, which can't hold the status button. Same type
-                and spacing as Carbon's table header. */}
-            <div className={styles.tableHeader}>
-              <div>
-                <h2 id='payment-history-title' className={styles.tableTitle}>
-                  Payment history
-                </h2>
-                <p className={styles.tableDescription}>As of {pensionPlan.asOfDate}</p>
-              </div>
-              <Button
-                kind='ghost'
-                size='sm'
-                onClick={(e) => {
-                  launcher.current = e.currentTarget;
-                  setStatusHelpOpen(true);
-                }}
-              >
-                What does status mean?
-              </Button>
-            </div>
+          <TableContainer
+            title='Payment history'
+            description={`As of ${pensionPlan.asOfDate}`}
+            {...getTableContainerProps()}
+          >
             <div className={styles.tableScroll}>
-              <Table {...getTableProps()} aria-labelledby='payment-history-title'>
+              <Table {...getTableProps()} aria-label='Payment history'>
                 <TableHead>
                   <TableRow>
                     {headers.map((header) => {
@@ -142,6 +156,8 @@ export function PaymentHistory() {
                         <TableHeader key={key} {...headerProps}>
                           {header.key === 'details' ? (
                             <span className='cds--visually-hidden'>{header.header}</span>
+                          ) : header.key === 'status' ? (
+                            <StatusHeader />
                           ) : (
                             header.header
                           )}
@@ -207,30 +223,6 @@ export function PaymentHistory() {
             </dl>
           </Stack>
         )}
-      </Modal>
-
-      <Modal
-        open={statusHelpOpen}
-        passiveModal
-        size='sm'
-        modalHeading='What does status mean?'
-        onRequestClose={() => setStatusHelpOpen(false)}
-        launcherButtonRef={launcher}
-      >
-        <dl
-          className={`${styles.details} ${styles.modalBody}`}
-          data-modal-primary-focus
-          tabIndex={-1}
-        >
-          {(Object.keys(statusLabels) as PensionPaymentStatus[]).map((status) => (
-            <Fragment key={status}>
-              <dt>
-                <StatusTag status={status} />
-              </dt>
-              <dd className={styles.value}>{statusDescriptions[status]}</dd>
-            </Fragment>
-          ))}
-        </dl>
       </Modal>
     </>
   );
