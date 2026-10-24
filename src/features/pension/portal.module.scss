@@ -127,6 +127,13 @@
   gap: $spacing-02;
 }
 
+// Carbon's tooltip wrappers are block line boxes taller than the 16px
+// icon, which leaves it sitting high; flex lets it center on the text.
+.headerWithInfo :global(.cds--popover-container),
+.headerWithInfo :global(.cds--tooltip-trigger__wrapper) {
+  display: flex;
+}
+
 // Icon-only tooltip trigger: no chrome, Carbon's secondary icon color and
 // focus ring.
 .infoTrigger {
