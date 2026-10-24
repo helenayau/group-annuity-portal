@@ -1,6 +1,5 @@
 'use client';
 
-import { Information } from '@carbon/icons-react';
 import {
   Button,
   DataTable,
@@ -13,10 +12,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-  Tag,
-  Toggletip,
-  ToggletipButton,
-  ToggletipContent
+  DefinitionTooltip,
+  Tag
 } from '@carbon/react';
 import { Fragment, useRef, useState } from 'react';
 import {
@@ -57,31 +54,28 @@ function StatusTag({ status }: { status: PensionPaymentStatus }) {
   );
 }
 
-// Status column header with Carbon's Toggletip: an info button that opens
-// the status definitions in place (toggletips suit longer explanations;
-// tooltips are for short labels).
+// Status column header as Carbon's DefinitionTooltip: the word itself is
+// the trigger (dotted underline), which Carbon recommends for data tables
+// where an extra info icon would add clutter. Opens on hover or focus.
+// Plain text only: Carbon tooltips hold non-interactive, brief content.
 function StatusHeader() {
   return (
-    <span className={styles.headerWithInfo}>
+    <DefinitionTooltip
+      openOnHover
+      align='bottom-start'
+      className={styles.statusDefinition}
+      definition={
+        <span className={styles.definitionList}>
+          {(Object.keys(statusLabels) as PensionPaymentStatus[]).map((status) => (
+            <span key={status} className={styles.definitionItem}>
+              <strong>{statusLabels[status]}:</strong> {statusDescriptions[status]}
+            </span>
+          ))}
+        </span>
+      }
+    >
       Status
-      <Toggletip align='bottom' autoAlign>
-        <ToggletipButton label='What does status mean?'>
-          <Information />
-        </ToggletipButton>
-        <ToggletipContent>
-          <dl className={styles.details}>
-            {(Object.keys(statusLabels) as PensionPaymentStatus[]).map((status) => (
-              <Fragment key={status}>
-                <dt>
-                  <StatusTag status={status} />
-                </dt>
-                <dd className={styles.value}>{statusDescriptions[status]}</dd>
-              </Fragment>
-            ))}
-          </dl>
-        </ToggletipContent>
-      </Toggletip>
-    </span>
+    </DefinitionTooltip>
   );
 }
 

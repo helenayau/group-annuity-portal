@@ -1,6 +1,5 @@
 'use client';
 
-import { DocumentPdf } from '@carbon/icons-react';
 import { Button, Column, Grid, Tile } from '@carbon/react';
 import { useRef, useState } from 'react';
 import { grossMonthlyPayment, pensionPlan } from '@/constants/mock-api-pension';
@@ -82,7 +81,6 @@ export function AccountDetails() {
             <Button
               kind='ghost'
               size='sm'
-              renderIcon={DocumentPdf}
               onClick={() => {
                 downloadPensionIncomeLetter(participant, accounts, grossMonthlyPayment);
                 notify('Income verification letter downloaded');

@@ -4,6 +4,7 @@
 // properties so they follow whichever Carbon theme wraps the content.
 @use '@carbon/styles/scss/spacing' as *;
 @use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/colors' as *;
 
 .root {
   display: flex;
@@ -58,8 +59,14 @@
 }
 
 .panels {
+  // The mockup's light blue page, from Carbon's palette (blue-10) instead
+  // of g10's gray. Overriding the token keeps any component that reads
+  // $background in step; tiles stay white ($layer-01).
+  --cds-background: #{$blue-10};
+
   flex: 1;
   padding-block: $spacing-05 $spacing-09;
+  background-color: var(--cds-background);
 }
 
 .pageTitle {
@@ -108,10 +115,20 @@
   margin-block-start: $spacing-07;
 }
 
-.headerWithInfo {
-  display: inline-flex;
-  align-items: center;
-  gap: $spacing-02;
+// Three definitions read better at Carbon's toggletip width (18rem) than
+// the definition tooltip's narrow default.
+.statusDefinition :global(.cds--popover-content) {
+  max-inline-size: 18rem;
+}
+
+.definitionList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-03;
+}
+
+.definitionItem {
+  display: block;
 }
 
 .tableScroll {
