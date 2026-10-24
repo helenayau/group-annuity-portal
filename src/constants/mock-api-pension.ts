@@ -32,30 +32,6 @@ export const participant: Participant = {
   phone: '(555) 201-4411'
 };
 
-export interface PensionAlert {
-  id: string;
-  title: string;
-  body: string;
-}
-
-export const pensionAlerts: PensionAlert[] = [
-  {
-    id: 'cola',
-    title: 'Your 2025 payment amount is confirmed',
-    body: 'Your monthly payment will stay at $320.00 next year. No action is needed.'
-  },
-  {
-    id: '1099r',
-    title: 'Tax forms go paperless this year',
-    body: 'Your 1099-R will be posted to E-documents by January 31 instead of mailed.'
-  },
-  {
-    id: 'address',
-    title: 'Moved recently?',
-    body: 'Keep your mailing address current so tax forms and notices reach you.'
-  }
-];
-
 export interface DepositAccount {
   id: string;
   bankName: string;
