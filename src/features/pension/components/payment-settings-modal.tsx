@@ -66,6 +66,7 @@ export function PaymentSettingsModal({
   return (
     <Modal
       open={open}
+      className={styles.compactFooter}
       modalHeading='Edit payment settings'
       primaryButtonText='Save changes'
       secondaryButtonText='Cancel'

@@ -1,5 +1,6 @@
 'use client';
 
+import { Information } from '@carbon/icons-react';
 import {
   Button,
   DataTable,
@@ -12,8 +13,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-  DefinitionTooltip,
-  Tag
+  Tag,
+  Tooltip
 } from '@carbon/react';
 import { Fragment, useRef, useState } from 'react';
 import {
@@ -54,28 +55,33 @@ function StatusTag({ status }: { status: PensionPaymentStatus }) {
   );
 }
 
-// Status column header as Carbon's DefinitionTooltip: the word itself is
-// the trigger (dotted underline), which Carbon recommends for data tables
-// where an extra info icon would add clutter. Opens on hover or focus.
-// Plain text only: Carbon tooltips hold non-interactive, brief content.
+// Status column header with an info icon and Carbon's Tooltip, which opens
+// on hover or focus (Carbon: tooltips for non-interactive text; toggletips
+// only when the content is interactive). The definitions describe the
+// button via aria-describedby.
 function StatusHeader() {
   return (
-    <DefinitionTooltip
-      openOnHover
-      align='bottom-start'
-      className={styles.statusDefinition}
-      definition={
-        <span className={styles.definitionList}>
-          {(Object.keys(statusLabels) as PensionPaymentStatus[]).map((status) => (
-            <span key={status} className={styles.definitionItem}>
-              <strong>{statusLabels[status]}:</strong> {statusDescriptions[status]}
-            </span>
-          ))}
-        </span>
-      }
-    >
+    <span className={styles.headerWithInfo}>
       Status
-    </DefinitionTooltip>
+      <Tooltip
+        align='bottom'
+        autoAlign
+        className={styles.statusDefinition}
+        description={
+          <span className={styles.definitionList}>
+            {(Object.keys(statusLabels) as PensionPaymentStatus[]).map((status) => (
+              <span key={status} className={styles.definitionItem}>
+                <strong>{statusLabels[status]}:</strong> {statusDescriptions[status]}
+              </span>
+            ))}
+          </span>
+        }
+      >
+        <button type='button' className={styles.infoTrigger} aria-label='What does status mean?'>
+          <Information />
+        </button>
+      </Tooltip>
+    </span>
   );
 }
 
@@ -136,6 +142,7 @@ export function PaymentHistory() {
           getTableContainerProps
         }) => (
           <TableContainer
+            className={styles.tableContainer}
             title='Payment history'
             description={`As of ${pensionPlan.asOfDate}`}
             {...getTableContainerProps()}

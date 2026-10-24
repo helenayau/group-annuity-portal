@@ -91,6 +91,7 @@ export function EDocuments() {
                   <Button
                     kind='ghost'
                     size='sm'
+                    className={styles.cellAction}
                     renderIcon={Download}
                     onClick={() => {
                       downloadPensionDocument(doc, participant);

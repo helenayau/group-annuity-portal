@@ -121,6 +121,33 @@
   max-inline-size: 18rem;
 }
 
+.headerWithInfo {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-02;
+}
+
+// Icon-only tooltip trigger: no chrome, Carbon's secondary icon color and
+// focus ring.
+.infoTrigger {
+  display: inline-flex;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--cds-icon-secondary);
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid var(--cds-focus);
+    outline-offset: 1px;
+  }
+}
+
+// Payment history title uses the same type as the tile titles.
+.tableContainer :global(.cds--data-table-header__title) {
+  @include type-style('heading-compact-02');
+}
+
 .definitionList {
   display: flex;
   flex-direction: column;
@@ -146,6 +173,28 @@
 // needs no focus ring; Tab still moves on to the buttons.
 .modalBody:focus {
   outline: none;
+}
+
+// Slimmer footer for the payment settings modal: Carbon's default modal
+// footer buttons are 4rem tall with 2rem of padding under the label. These
+// use the large button height (3rem) with the label centered. A deliberate,
+// scoped deviation from Carbon's modal footer spec.
+.compactFooter :global(.cds--modal-footer) {
+  block-size: 3rem;
+}
+
+.compactFooter :global(.cds--modal-footer .cds--btn:not(.cds--skeleton)) {
+  align-items: center;
+  block-size: 3rem;
+  padding-block: 0;
+}
+
+// Ghost buttons inside list cells: pull back by their 16px padding so the
+// label lines up with the column header text (Carbon's ghost alignment
+// rule), and up so it sits on the first line of the row's content.
+.cellAction {
+  margin-block-start: -$spacing-03;
+  margin-inline-start: -$spacing-05;
 }
 
 .formTotal {
