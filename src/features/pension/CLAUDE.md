@@ -16,10 +16,13 @@ host rewrite to `/pension`).
 
 ## Design system
 
-- Use Carbon (`@carbon/react`, `@carbon/icons-react`). Look up Carbon's docs
-  and examples (Carbon MCP `docs_search` / `code_search`) before choosing a
-  component. Don't work from memory.
-- Cite the Carbon doc page for every guideline claim. No source, not a rule.
+- Use Carbon (`@carbon/react`, `@carbon/icons-react`).
+- Before any UI change (component choice, spacing, type, layout,
+  interaction or accessibility behavior), look up Carbon's docs and
+  examples with the Carbon MCP (`docs_search` / `code_search`). Don't work
+  from memory.
+- Cite the Carbon doc page you followed in your summary of each change, and
+  for every guideline claim. No source, not a rule.
 - If Carbon has a component for it, use it. Never hand-build a copy.
 - If a request conflicts with Carbon, tell the designer before building
   around it.
