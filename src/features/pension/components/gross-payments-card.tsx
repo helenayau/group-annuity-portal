@@ -92,11 +92,13 @@ function PaymentSettingsForm({
         </span>
       </div>
       <DialogFooter>
-        <Button type='button' variant='outline' onClick={onCancel}>
+        <Button type='button' variant='outline' className={pillButton} onClick={onCancel}>
           Cancel
         </Button>
         <form.AppForm>
-          <form.SubmitButton disabled={!isDirty}>Save changes</form.SubmitButton>
+          <form.SubmitButton variant='outline' className={pillButton} disabled={!isDirty}>
+            Save changes
+          </form.SubmitButton>
         </form.AppForm>
       </DialogFooter>
     </form>

@@ -69,9 +69,11 @@ function ContactForm({
       </CardContent>
       <CardFooter className='gap-2'>
         <form.AppForm>
-          <form.SubmitButton disabled={!isDirty}>Save changes</form.SubmitButton>
+          <form.SubmitButton variant='outline' className={pillButton} disabled={!isDirty}>
+            Save changes
+          </form.SubmitButton>
         </form.AppForm>
-        <Button type='button' variant='outline' onClick={onCancel}>
+        <Button type='button' variant='outline' className={pillButton} onClick={onCancel}>
           Cancel
         </Button>
       </CardFooter>
