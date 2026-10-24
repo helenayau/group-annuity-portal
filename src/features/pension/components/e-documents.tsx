@@ -13,7 +13,7 @@ import {
   StructuredListWrapper,
   Tile
 } from '@carbon/react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   pensionDocumentCategories,
   type PensionDocumentCategory
@@ -30,6 +30,8 @@ export function EDocuments() {
   const notify = useNotify();
   const [open, setOpen] = useState<PensionDocumentCategory | null>(null);
   const details = open ? pensionDocumentCategories[open] : null;
+  // The button that opened the modal, so Carbon can return focus to it on close.
+  const launcher = useRef<HTMLButtonElement | null>(null);
 
   return (
     <>
@@ -42,7 +44,14 @@ export function EDocuments() {
                 <h2 className={styles.tileTitle}>{item.label}</h2>
                 <p className={styles.tileBody}>{item.description}</p>
                 <div className={styles.tileActions}>
-                  <Button kind='ghost' size='sm' onClick={() => setOpen(category)}>
+                  <Button
+                    kind='ghost'
+                    size='sm'
+                    onClick={(e) => {
+                      launcher.current = e.currentTarget;
+                      setOpen(category);
+                    }}
+                  >
                     {item.actionLabel}
                   </Button>
                 </div>
@@ -58,8 +67,11 @@ export function EDocuments() {
         size='md'
         modalHeading={details?.label ?? ''}
         onRequestClose={() => setOpen(null)}
+        launcherButtonRef={launcher}
       >
-        <p className={styles.tileBody}>{details?.description}</p>
+        <div data-modal-primary-focus tabIndex={-1} className={styles.modalBody}>
+          <p className={styles.tileBody}>{details?.description}</p>
+        </div>
         <StructuredListWrapper aria-label={details?.label ?? 'Documents'}>
           <StructuredListHead>
             <StructuredListRow head>

@@ -22,11 +22,13 @@ function amountsOf(accounts: DepositAccount[]) {
 
 export function PaymentSettingsModal({
   open,
+  launcherButtonRef,
   accounts,
   onClose,
   onSave
 }: {
   open: boolean;
+  launcherButtonRef: React.RefObject<HTMLButtonElement | null>;
   accounts: DepositAccount[];
   onClose: () => void;
   onSave: (accounts: DepositAccount[]) => void;
@@ -69,6 +71,7 @@ export function PaymentSettingsModal({
       secondaryButtonText='Cancel'
       primaryButtonDisabled={!isDirty}
       onRequestClose={onClose}
+      launcherButtonRef={launcherButtonRef}
       onRequestSubmit={() => form.handleSubmit()}
       // The fields live in the modal, whose footer holds the submit button,
       // so let Carbon handle Enter rather than a nested <form>.

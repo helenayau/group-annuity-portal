@@ -2,7 +2,7 @@
 
 import { DocumentPdf } from '@carbon/icons-react';
 import { Button, Column, Grid, Tile } from '@carbon/react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { grossMonthlyPayment, pensionPlan } from '@/constants/mock-api-pension';
 import { formatCurrencyCents } from '@/features/annuity/utils';
 import { downloadPensionIncomeLetter, downloadWithholdingForm } from '../documents';
@@ -16,6 +16,7 @@ export function AccountDetails() {
   const { participant, accounts, setAccounts } = usePension();
   const notify = useNotify();
   const [editingPayments, setEditingPayments] = useState(false);
+  const editPaymentsButton = useRef<HTMLButtonElement>(null);
 
   return (
     <Grid withRowGap>
@@ -26,7 +27,12 @@ export function AccountDetails() {
           <p className={styles.amount}>{formatCurrencyCents(grossMonthlyPayment)}</p>
           <p className={styles.tileBody}>Paid to {accounts.length} account(s)</p>
           <div className={styles.tileActions}>
-            <Button kind='ghost' size='sm' onClick={() => setEditingPayments(true)}>
+            <Button
+              ref={editPaymentsButton}
+              kind='ghost'
+              size='sm'
+              onClick={() => setEditingPayments(true)}
+            >
               Edit payment settings
             </Button>
           </div>
@@ -93,6 +99,7 @@ export function AccountDetails() {
       </Column>
 
       <PaymentSettingsModal
+        launcherButtonRef={editPaymentsButton}
         open={editingPayments}
         accounts={accounts}
         onClose={() => setEditingPayments(false)}

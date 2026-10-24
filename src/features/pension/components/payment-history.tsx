@@ -12,11 +12,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-  TableToolbar,
-  TableToolbarContent,
   Tag
 } from '@carbon/react';
-import { Fragment, useState } from 'react';
+import { Fragment, useRef, useState } from 'react';
 import {
   pensionPayments,
   pensionPlan,
@@ -68,6 +66,8 @@ export function PaymentHistory() {
   const [showAll, setShowAll] = useState(false);
   const [selected, setSelected] = useState<PensionPayment | null>(null);
   const [statusHelpOpen, setStatusHelpOpen] = useState(false);
+  // The button that opened a modal, so Carbon can return focus to it on close.
+  const launcher = useRef<HTMLButtonElement | null>(null);
   const payments = showAll ? pensionPayments : pensionPayments.slice(0, INITIAL_ROWS);
   const rows = payments.map((payment) => ({
     id: payment.id,
@@ -87,7 +87,10 @@ export function PaymentHistory() {
           kind='ghost'
           size='sm'
           aria-label={`View payment to account ending ${payment.accountLast4} on ${payment.date}`}
-          onClick={() => setSelected(payment)}
+          onClick={(e) => {
+            launcher.current = e.currentTarget;
+            setSelected(payment);
+          }}
         >
           View
         </Button>
@@ -105,24 +108,32 @@ export function PaymentHistory() {
           getTableProps,
           getHeaderProps,
           getRowProps,
-          getTableContainerProps,
-          getToolbarProps
+          getTableContainerProps
         }) => (
-          <TableContainer
-            title='Payment history'
-            description={`As of ${pensionPlan.asOfDate}`}
-            {...getTableContainerProps()}
-          >
-            {/* Carbon puts table-level actions in the toolbar, right-aligned. */}
-            <TableToolbar {...getToolbarProps()} aria-label='Payment history actions'>
-              <TableToolbarContent>
-                <Button kind='ghost' size='lg' onClick={() => setStatusHelpOpen(true)}>
-                  What does status mean?
-                </Button>
-              </TableToolbarContent>
-            </TableToolbar>
+          <TableContainer {...getTableContainerProps()}>
+            {/* Header row in place of TableContainer's title: Carbon renders the
+                title as an <h2>, which can't hold the status button. Same type
+                and spacing as Carbon's table header. */}
+            <div className={styles.tableHeader}>
+              <div>
+                <h2 id='payment-history-title' className={styles.tableTitle}>
+                  Payment history
+                </h2>
+                <p className={styles.tableDescription}>As of {pensionPlan.asOfDate}</p>
+              </div>
+              <Button
+                kind='ghost'
+                size='sm'
+                onClick={(e) => {
+                  launcher.current = e.currentTarget;
+                  setStatusHelpOpen(true);
+                }}
+              >
+                What does status mean?
+              </Button>
+            </div>
             <div className={styles.tableScroll}>
-              <Table {...getTableProps()} aria-label='Payment history'>
+              <Table {...getTableProps()} aria-labelledby='payment-history-title'>
                 <TableHead>
                   <TableRow>
                     {headers.map((header) => {
@@ -171,9 +182,10 @@ export function PaymentHistory() {
         size='sm'
         modalHeading='Payment details'
         onRequestClose={() => setSelected(null)}
+        launcherButtonRef={launcher}
       >
         {selected && (
-          <Stack gap={5}>
+          <Stack gap={5} data-modal-primary-focus tabIndex={-1} className={styles.modalBody}>
             <p className={styles.tileBody}>{statusDescriptions[selected.status]}</p>
             <dl className={styles.details}>
               {(
@@ -203,8 +215,13 @@ export function PaymentHistory() {
         size='sm'
         modalHeading='What does status mean?'
         onRequestClose={() => setStatusHelpOpen(false)}
+        launcherButtonRef={launcher}
       >
-        <dl className={styles.details}>
+        <dl
+          className={`${styles.details} ${styles.modalBody}`}
+          data-modal-primary-focus
+          tabIndex={-1}
+        >
           {(Object.keys(statusLabels) as PensionPaymentStatus[]).map((status) => (
             <Fragment key={status}>
               <dt>

@@ -108,6 +108,32 @@
   margin-block-start: $spacing-07;
 }
 
+// Mirrors Carbon's data table header (.cds--data-table-header) with the
+// status button on the same line as the title.
+.tableHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $spacing-05;
+  padding: $spacing-05 $spacing-05 $spacing-06;
+  background: var(--cds-layer-01);
+}
+
+// Ghost button label lines up with the header's right padding edge.
+.tableHeader > :global(.cds--btn--ghost) {
+  margin-inline-end: -$spacing-05;
+}
+
+.tableTitle {
+  @include type-style('heading-03');
+  color: var(--cds-text-primary);
+}
+
+.tableDescription {
+  @include type-style('body-compact-01');
+  color: var(--cds-text-secondary);
+}
+
 .tableScroll {
   overflow-x: auto;
 }
@@ -115,6 +141,14 @@
 .tableActions {
   padding: $spacing-03 0;
   background: var(--cds-layer-01);
+}
+
+// Passive "view" modals focus their content on open (data-modal-primary-
+// focus) instead of Carbon's fallback, the close button, whose tooltip
+// would pop up. The content isn't in the tab order (tabIndex -1), so it
+// needs no focus ring; Tab still moves on to the buttons.
+.modalBody:focus {
+  outline: none;
 }
 
 .formTotal {
