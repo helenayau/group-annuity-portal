@@ -1,12 +1,7 @@
-import { EDocumentsGrid } from '@/features/pension/components/e-documents-grid';
+import { EDocuments } from '@/features/pension/components/e-documents';
 
 export const metadata = { title: 'E-documents' };
 
 export default function Page() {
-  return (
-    <>
-      <h2 className='sr-only'>E-documents</h2>
-      <EDocumentsGrid />
-    </>
-  );
+  return <EDocuments />;
 }
