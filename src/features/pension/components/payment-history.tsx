@@ -161,7 +161,7 @@ export function PaymentHistory() {
               </Table>
             </div>
             <div className={styles.tableActions}>
-              <Button kind='tertiary' size='sm' onClick={() => setShowAll(!showAll)}>
+              <Button kind='ghost' size='sm' onClick={() => setShowAll(!showAll)}>
                 {showAll ? 'Show fewer' : 'View all'}
               </Button>
             </div>

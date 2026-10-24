@@ -84,13 +84,15 @@
   color: var(--cds-text-secondary);
 }
 
-// Tile actions wrap onto a new line in narrow tiles. (ButtonSet is kept
-// for form footers; it caps button width and doesn't wrap.)
+// Tile actions are ghost buttons (Carbon: ghost buttons suit productive
+// cards). Ghost buttons carry 16px of inline padding, so the row is pulled
+// back by the same amount to line their labels up with the tile text, per
+// Carbon's ghost button alignment guidance. They wrap in narrow tiles.
 .tileActions {
   display: flex;
   flex-wrap: wrap;
-  gap: $spacing-03;
-  margin-block-start: $spacing-05;
+  margin-block-start: $spacing-03;
+  margin-inline-start: -$spacing-05;
 }
 
 .amount {
@@ -111,7 +113,7 @@
 }
 
 .tableActions {
-  padding: $spacing-05;
+  padding: $spacing-03 0;
   background: var(--cds-layer-01);
 }
 

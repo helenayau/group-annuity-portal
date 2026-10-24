@@ -106,7 +106,7 @@ function ContactSection() {
             <p className={styles.tileBody}>How the plan reaches you about your payments.</p>
           </div>
           {!isEditing && (
-            <Button kind='tertiary' size='sm' renderIcon={Edit} onClick={() => setIsEditing(true)}>
+            <Button kind='ghost' size='sm' renderIcon={Edit} onClick={() => setIsEditing(true)}>
               Edit
             </Button>
           )}

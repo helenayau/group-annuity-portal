@@ -42,7 +42,7 @@ export function EDocuments() {
                 <h2 className={styles.tileTitle}>{item.label}</h2>
                 <p className={styles.tileBody}>{item.description}</p>
                 <div className={styles.tileActions}>
-                  <Button kind='tertiary' size='sm' onClick={() => setOpen(category)}>
+                  <Button kind='ghost' size='sm' onClick={() => setOpen(category)}>
                     {item.actionLabel}
                   </Button>
                 </div>

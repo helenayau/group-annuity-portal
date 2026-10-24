@@ -37,7 +37,7 @@ export function PersonalDetails() {
           <h2 className={styles.tileTitle}>Personal details</h2>
           <Address participant={participant} />
           <div className={styles.tileActions}>
-            <Button as={Link} href={portalHref('/profile?edit=personal')} kind='tertiary' size='sm'>
+            <Button as={Link} href={portalHref('/profile?edit=personal')} kind='ghost' size='sm'>
               Edit personal details
             </Button>
           </div>
@@ -50,7 +50,7 @@ export function PersonalDetails() {
             You can update your email address, password, and other preferences on your profile.
           </p>
           <div className={styles.tileActions}>
-            <Button as={Link} href={portalHref('/profile')} kind='tertiary' size='sm'>
+            <Button as={Link} href={portalHref('/profile')} kind='ghost' size='sm'>
               Go to profile
             </Button>
           </div>
@@ -181,7 +181,7 @@ export function PersonalDetailsSection({ defaultEditing = false }: { defaultEdit
             </p>
           </div>
           {!isEditing && (
-            <Button kind='tertiary' size='sm' renderIcon={Edit} onClick={() => setIsEditing(true)}>
+            <Button kind='ghost' size='sm' renderIcon={Edit} onClick={() => setIsEditing(true)}>
               Edit
             </Button>
           )}

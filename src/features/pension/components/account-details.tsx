@@ -26,7 +26,7 @@ export function AccountDetails() {
           <p className={styles.amount}>{formatCurrencyCents(grossMonthlyPayment)}</p>
           <p className={styles.tileBody}>Paid to {accounts.length} account(s)</p>
           <div className={styles.tileActions}>
-            <Button kind='tertiary' size='sm' onClick={() => setEditingPayments(true)}>
+            <Button kind='ghost' size='sm' onClick={() => setEditingPayments(true)}>
               Edit payment settings
             </Button>
           </div>
@@ -39,7 +39,7 @@ export function AccountDetails() {
           <p className={styles.tileBody}>View your federal and state tax withholding forms.</p>
           <div className={styles.tileActions}>
             <Button
-              kind='tertiary'
+              kind='ghost'
               size='sm'
               onClick={() => {
                 downloadWithholdingForm('federal', participant);
@@ -49,7 +49,7 @@ export function AccountDetails() {
               View federal taxes
             </Button>
             <Button
-              kind='tertiary'
+              kind='ghost'
               size='sm'
               onClick={() => {
                 downloadWithholdingForm('state', participant);
@@ -74,7 +74,7 @@ export function AccountDetails() {
           </p>
           <div className={styles.tileActions}>
             <Button
-              kind='tertiary'
+              kind='ghost'
               size='sm'
               renderIcon={DocumentPdf}
               onClick={() => {
