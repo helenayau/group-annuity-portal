@@ -23,7 +23,7 @@ export function IncomeLetterCard() {
     <Card className='h-full'>
       <CardHeader>
         <CardTitle>Income verification letter</CardTitle>
-        <CardDescription className='uppercase'>
+        <CardDescription>
           For {participant.firstName} {participant.lastName}
         </CardDescription>
       </CardHeader>

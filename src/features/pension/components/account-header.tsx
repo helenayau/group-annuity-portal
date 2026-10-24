@@ -20,7 +20,7 @@ export function AccountHeader() {
         <p className='text-muted-foreground text-sm'>
           Your retirement account as of {pensionPlan.asOfDate}
         </p>
-        <h1 className='mt-1 text-2xl font-semibold tracking-tight uppercase md:text-3xl'>
+        <h1 className='mt-1 text-2xl font-semibold tracking-tight md:text-3xl'>
           {pensionPlan.planName}
         </h1>
         <p className='text-muted-foreground mt-1 text-sm'>Contract {pensionPlan.contractNumber}</p>

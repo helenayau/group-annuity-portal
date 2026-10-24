@@ -117,7 +117,7 @@ export function PersonalDetailsCard() {
         <CardTitle>Personal details</CardTitle>
       </CardHeader>
       <CardContent className='flex-1'>
-        <address className='text-muted-foreground text-sm leading-6 not-italic uppercase'>
+        <address className='text-muted-foreground text-sm leading-6 not-italic'>
           {participant.firstName} {participant.lastName}
           <br />
           {participant.addressLine1}
