@@ -1,7 +1,20 @@
 'use client';
 
 import { Home, Logout, UserAvatar } from '@carbon/icons-react';
-import { Button, Header, SkipToContent, Tab, TabList, Tabs, Theme } from '@carbon/react';
+import {
+  Button,
+  Column,
+  Content,
+  Grid,
+  Header,
+  SkipToContent,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  Theme
+} from '@carbon/react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { pensionPlan } from '@/constants/mock-api-pension';
@@ -51,11 +64,13 @@ function PortalHeader() {
   );
 }
 
-function AccountHeader() {
+// Each tab is its own route, so the tab bar and its panels share one Tabs
+// context: the selected panel renders the current page. Profile is where
+// personal details are edited, so it keeps that tab active.
+function AccountTabs({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const portalHref = usePortalHref();
-  // Profile is where personal details are edited, so it keeps that tab active.
   const current = pathname.endsWith('/profile')
     ? 1
     : Math.max(
@@ -64,25 +79,33 @@ function AccountHeader() {
       );
 
   return (
-    <div className={styles.band}>
-      <div className={`${styles.container} ${styles.accountHeader}`}>
-        <p className={styles.eyebrow}>Your retirement account as of {pensionPlan.asOfDate}</p>
-        <h1 className={styles.title}>{pensionPlan.planName}</h1>
-        <p className={styles.eyebrow}>Contract {pensionPlan.contractNumber}</p>
-        <div className={styles.tabs}>
-          <Tabs
-            selectedIndex={current}
-            onChange={({ selectedIndex }) => router.push(portalHref(tabs[selectedIndex].path))}
-          >
-            <TabList aria-label='Account sections'>
+    <Tabs
+      selectedIndex={current}
+      onChange={({ selectedIndex }) => router.push(portalHref(tabs[selectedIndex].path))}
+    >
+      <Theme theme='white' className={styles.band}>
+        <Grid>
+          <Column sm={4} md={8} lg={16}>
+            <p className={styles.eyebrow}>Your retirement account as of {pensionPlan.asOfDate}</p>
+            <h1 className={styles.title}>{pensionPlan.planName}</h1>
+            <p className={styles.eyebrow}>Contract {pensionPlan.contractNumber}</p>
+            {/* Manual activation: arrow keys move focus, Enter opens the page. */}
+            <TabList aria-label='Account sections' activation='manual' className={styles.tabs}>
               {tabs.map((tab) => (
                 <Tab key={tab.path}>{tab.label}</Tab>
               ))}
             </TabList>
-          </Tabs>
-        </div>
-      </div>
-    </div>
+          </Column>
+        </Grid>
+      </Theme>
+      <Theme theme='g10' className={styles.panels}>
+        <TabPanels>
+          {tabs.map((tab, i) => (
+            <TabPanel key={tab.path}>{i === current ? children : null}</TabPanel>
+          ))}
+        </TabPanels>
+      </Theme>
+    </Tabs>
   );
 }
 
@@ -90,16 +113,10 @@ export function PortalShell({ children }: { children: React.ReactNode }) {
   return (
     <div className={styles.root}>
       <ToastProvider>
-        <Theme theme='white'>
-          <PortalHeader />
-          <div className={styles.headerSpacer} />
-          <AccountHeader />
-        </Theme>
-        <Theme theme='g10' className={styles.main}>
-          <main id='main-content' className={styles.container}>
-            {children}
-          </main>
-        </Theme>
+        <PortalHeader />
+        <Content id='main-content' className={styles.content}>
+          <AccountTabs>{children}</AccountTabs>
+        </Content>
       </ToastProvider>
     </div>
   );

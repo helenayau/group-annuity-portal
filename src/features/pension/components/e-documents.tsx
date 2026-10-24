@@ -3,9 +3,12 @@
 import { Download } from '@carbon/icons-react';
 import {
   Button,
+  Column,
+  Grid,
   Modal,
   StructuredListBody,
   StructuredListCell,
+  StructuredListHead,
   StructuredListRow,
   StructuredListWrapper,
   Tile
@@ -30,22 +33,24 @@ export function EDocuments() {
 
   return (
     <>
-      <div className={styles.grid3}>
+      <Grid withRowGap>
         {categories.map((category) => {
           const item = pensionDocumentCategories[category];
           return (
-            <Tile key={category} className={styles.tile}>
-              <h2 className={styles.tileTitle}>{item.label}</h2>
-              <p className={styles.tileBody}>{item.description}</p>
-              <div className={styles.tileActions}>
-                <Button kind='tertiary' size='sm' onClick={() => setOpen(category)}>
-                  {item.actionLabel}
-                </Button>
-              </div>
-            </Tile>
+            <Column key={category} sm={4} md={4} lg={4}>
+              <Tile className={styles.tile}>
+                <h2 className={styles.tileTitle}>{item.label}</h2>
+                <p className={styles.tileBody}>{item.description}</p>
+                <div className={styles.tileActions}>
+                  <Button kind='tertiary' size='sm' onClick={() => setOpen(category)}>
+                    {item.actionLabel}
+                  </Button>
+                </div>
+              </Tile>
+            </Column>
           );
         })}
-      </div>
+      </Grid>
 
       <Modal
         open={details !== null}
@@ -56,6 +61,12 @@ export function EDocuments() {
       >
         <p className={styles.tileBody}>{details?.description}</p>
         <StructuredListWrapper aria-label={details?.label ?? 'Documents'}>
+          <StructuredListHead>
+            <StructuredListRow head>
+              <StructuredListCell head>Document</StructuredListCell>
+              <StructuredListCell head>Action</StructuredListCell>
+            </StructuredListRow>
+          </StructuredListHead>
           <StructuredListBody>
             {details?.documents.map((doc) => (
               <StructuredListRow key={doc.id}>

@@ -2,6 +2,7 @@
 
 import { Modal, NumberInput, Stack } from '@carbon/react';
 import { useStore } from '@tanstack/react-form';
+import { useEffect } from 'react';
 import * as z from 'zod';
 import { grossMonthlyPayment, type DepositAccount } from '@/constants/mock-api-pension';
 import { formatCurrencyCents } from '@/features/annuity/utils';
@@ -15,20 +16,24 @@ const amountSchema = z
   .min(0, 'Must be $0 or more')
   .max(grossMonthlyPayment, `Must be ${formatCurrencyCents(grossMonthlyPayment)} or less`);
 
+function amountsOf(accounts: DepositAccount[]) {
+  return { amounts: accounts.map((account) => account.amount as number | undefined) };
+}
+
 export function PaymentSettingsModal({
+  open,
   accounts,
   onClose,
   onSave
 }: {
+  open: boolean;
   accounts: DepositAccount[];
   onClose: () => void;
   onSave: (accounts: DepositAccount[]) => void;
 }) {
   const notify = useNotify();
   const form = useAppForm({
-    defaultValues: {
-      amounts: accounts.map((account) => account.amount as number | undefined)
-    },
+    defaultValues: amountsOf(accounts),
     validators: {
       onSubmit: z
         .object({ amounts: z.array(amountSchema) })
@@ -50,60 +55,63 @@ export function PaymentSettingsModal({
     state.values.amounts.reduce<number>((sum, amount) => sum + (amount ?? 0), 0)
   );
 
+  // The modal stays mounted (Carbon's pattern), so start from the saved
+  // amounts each time it opens; Cancel discards any edits.
+  useEffect(() => {
+    if (open) form.reset(amountsOf(accounts));
+  }, [open, accounts, form]);
+
   return (
     <Modal
-      open
+      open={open}
       modalHeading='Edit payment settings'
       primaryButtonText='Save changes'
       secondaryButtonText='Cancel'
       primaryButtonDisabled={!isDirty}
       onRequestClose={onClose}
       onRequestSubmit={() => form.handleSubmit()}
+      // The fields live in the modal, whose footer holds the submit button,
+      // so let Carbon handle Enter rather than a nested <form>.
+      shouldSubmitOnEnter
       size='sm'
     >
       <p className={styles.tileBody}>
         Choose how much of each monthly payment goes to each of your accounts.
       </p>
-      <form
-        className={styles.section}
-        onSubmit={(e) => {
-          e.preventDefault();
-          form.handleSubmit();
-        }}
-      >
-        <Stack gap={5}>
-          {accounts.map((account, i) => (
-            <form.Field
-              key={account.id}
-              name={`amounts[${i}]`}
-              children={(field) => (
-                <NumberInput
-                  id={`amount-${account.id}`}
-                  label={`${account.bankName} ${account.accountType.toLowerCase()} *****${account.accountLast4}`}
-                  value={field.state.value ?? ''}
-                  min={0}
-                  step={10}
-                  allowEmpty
-                  invalid={field.state.meta.errors.length > 0}
-                  invalidText={fieldError(field.state.meta.errors)}
-                  onBlur={field.handleBlur}
-                  onChange={(_event, { value }) =>
-                    field.handleChange(
-                      value === '' || value === undefined ? undefined : Number(value)
-                    )
-                  }
-                />
-              )}
-            />
-          ))}
-        </Stack>
+      <Stack gap={7} className={styles.section}>
+        {accounts.map((account, i) => (
+          <form.Field
+            key={account.id}
+            name={`amounts[${i}]`}
+            children={(field) => (
+              <NumberInput
+                id={`amount-${account.id}`}
+                // Carbon: in a transactional modal, focus starts on the first input.
+                data-modal-primary-focus={i === 0 ? true : undefined}
+                label={`${account.bankName} ${account.accountType.toLowerCase()} *****${account.accountLast4}`}
+                value={field.state.value ?? ''}
+                min={0}
+                step={10}
+                allowEmpty
+                invalid={field.state.meta.errors.length > 0}
+                invalidText={fieldError(field.state.meta.errors)}
+                onBlur={field.handleBlur}
+                onChange={(_event, { value }) =>
+                  field.handleChange(
+                    value === '' || value === undefined ? undefined : Number(value)
+                  )
+                }
+              />
+            )}
+          />
+        ))}
         <div className={styles.formTotal}>
           <span>Gross monthly payments</span>
           <strong>
             {formatCurrencyCents(total)} of {formatCurrencyCents(grossMonthlyPayment)}
           </strong>
         </div>
-      </form>
+      </Stack>
     </Modal>
   );
 }

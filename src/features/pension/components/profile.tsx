@@ -1,7 +1,7 @@
 'use client';
 
 import { Edit } from '@carbon/icons-react';
-import { Button, Stack, TextInput, Tile, Toggle } from '@carbon/react';
+import { Button, ButtonSet, Column, Grid, Stack, TextInput, Tile, Toggle } from '@carbon/react';
 import { useStore } from '@tanstack/react-form';
 import { useState } from 'react';
 import * as z from 'zod';
@@ -45,46 +45,50 @@ function ContactForm({
         form.handleSubmit();
       }}
     >
-      <div className={styles.formGrid}>
-        <form.Field
-          name='email'
-          children={(field) => (
-            <TextInput
-              id='contact-email'
-              type='email'
-              labelText='Email address'
-              value={field.state.value}
-              invalid={field.state.meta.errors.length > 0}
-              invalidText={fieldError(field.state.meta.errors)}
-              onBlur={field.handleBlur}
-              onChange={(e) => field.handleChange(e.target.value)}
+      <Grid>
+        <Column sm={4} md={6} lg={8}>
+          <Stack gap={7}>
+            <form.Field
+              name='email'
+              children={(field) => (
+                <TextInput
+                  id='contact-email'
+                  type='email'
+                  labelText='Email address'
+                  value={field.state.value}
+                  invalid={field.state.meta.errors.length > 0}
+                  invalidText={fieldError(field.state.meta.errors)}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                />
+              )}
             />
-          )}
-        />
-        <form.Field
-          name='phone'
-          children={(field) => (
-            <TextInput
-              id='contact-phone'
-              type='tel'
-              labelText='Phone'
-              value={field.state.value}
-              invalid={field.state.meta.errors.length > 0}
-              invalidText={fieldError(field.state.meta.errors)}
-              onBlur={field.handleBlur}
-              onChange={(e) => field.handleChange(e.target.value)}
+            <form.Field
+              name='phone'
+              children={(field) => (
+                <TextInput
+                  id='contact-phone'
+                  type='tel'
+                  labelText='Phone'
+                  value={field.state.value}
+                  invalid={field.state.meta.errors.length > 0}
+                  invalidText={fieldError(field.state.meta.errors)}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                />
+              )}
             />
-          )}
-        />
-      </div>
-      <div className={styles.tileActions}>
-        <Button type='submit' kind='primary' size='md' disabled={!isDirty}>
-          Save changes
-        </Button>
-        <Button type='button' kind='secondary' size='md' onClick={onCancel}>
-          Cancel
-        </Button>
-      </div>
+            <ButtonSet>
+              <Button type='button' kind='secondary' size='lg' onClick={onCancel}>
+                Cancel
+              </Button>
+              <Button type='submit' kind='primary' size='lg' disabled={!isDirty}>
+                Save changes
+              </Button>
+            </ButtonSet>
+          </Stack>
+        </Column>
+      </Grid>
     </form>
   );
 }
@@ -96,7 +100,7 @@ function ContactSection() {
   return (
     <Tile>
       <Stack gap={5}>
-        <div className={styles.docRow}>
+        <div className={styles.sectionHeader}>
           <div>
             <h2 className={styles.tileTitle}>Contact information</h2>
             <p className={styles.tileBody}>How the plan reaches you about your payments.</p>
@@ -117,15 +121,11 @@ function ContactSection() {
             }}
           />
         ) : (
-          <dl className={styles.definition}>
-            <div>
-              <dt className={styles.label}>Email address</dt>
-              <dd className={styles.value}>{participant.email}</dd>
-            </div>
-            <div>
-              <dt className={styles.label}>Phone</dt>
-              <dd className={styles.value}>{participant.phone}</dd>
-            </div>
+          <dl className={styles.details}>
+            <dt className={styles.label}>Email address</dt>
+            <dd className={styles.value}>{participant.email}</dd>
+            <dt className={styles.label}>Phone</dt>
+            <dd className={styles.value}>{participant.phone}</dd>
           </dl>
         )}
       </Stack>
@@ -167,7 +167,7 @@ function PreferencesSection() {
       </p>
       <div className={styles.section}>
         {preferences.map((pref) => (
-          <div key={pref.id} className={styles.toggleRow}>
+          <Stack key={pref.id} gap={3} className={styles.toggleRow}>
             <Toggle
               id={pref.id}
               labelText={pref.label}
@@ -181,7 +181,7 @@ function PreferencesSection() {
               }}
             />
             <p className={styles.tileBody}>{pref.description}</p>
-          </div>
+          </Stack>
         ))}
       </div>
     </Tile>
@@ -190,13 +190,15 @@ function PreferencesSection() {
 
 export function Profile({ editPersonal = false }: { editPersonal?: boolean }) {
   return (
-    <>
-      <h2 className={styles.pageTitle}>Profile</h2>
-      <Stack gap={5}>
-        <PersonalDetailsSection defaultEditing={editPersonal} />
-        <ContactSection />
-        <PreferencesSection />
-      </Stack>
-    </>
+    <Grid>
+      <Column sm={4} md={8} lg={16}>
+        <h2 className={styles.pageTitle}>Profile</h2>
+        <Stack gap={5}>
+          <PersonalDetailsSection defaultEditing={editPersonal} />
+          <ContactSection />
+          <PreferencesSection />
+        </Stack>
+      </Column>
+    </Grid>
   );
 }

@@ -1,6 +1,7 @@
-// Layout for the Carbon-based group annuity portal. Spacing and type come
-// from Carbon's Sass tokens; colors are the theme's --cds-* custom properties
-// so they follow whichever Carbon theme (white, g10) wraps the content.
+// Styles for the Carbon-based group annuity portal. Layout comes from
+// Carbon's Grid, Column, Stack and ButtonSet; this file only adds spacing
+// and type from Carbon's Sass tokens. Colors are the theme's --cds-* custom
+// properties so they follow whichever Carbon theme wraps the content.
 @use '@carbon/styles/scss/spacing' as *;
 @use '@carbon/styles/scss/type' as *;
 
@@ -14,36 +15,32 @@
   font-family: 'IBM Plex Sans', system-ui, sans-serif;
 }
 
-.headerSpacer {
-  height: 3rem;
-}
-
 .headerActions {
-  margin-left: auto;
+  margin-inline-start: auto;
   display: flex;
   align-items: center;
 }
 
+// Carbon's header is fixed, so keep keyboard-focused elements from
+// scrolling underneath it (WCAG 2.4.11, focus not obscured). 3rem is the
+// UI Shell header height.
+:global(html):has(.root) {
+  scroll-padding-block-start: 3rem;
+}
+
+// Carbon's Content adds the fixed-header offset; its default 2rem padding
+// is dropped so the white account band can run edge to edge.
+.content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 0;
+}
+
 .band {
-  border-bottom: 1px solid var(--cds-border-subtle-01);
+  padding-block-start: $spacing-07;
+  border-block-end: 1px solid var(--cds-border-subtle-01);
   background: var(--cds-background);
-}
-
-.container {
-  width: 100%;
-  max-width: 82rem;
-  margin: 0 auto;
-  padding-inline: $spacing-05;
-}
-
-@media (min-width: 42rem) {
-  .container {
-    padding-inline: $spacing-07;
-  }
-}
-
-.accountHeader {
-  padding-top: $spacing-07;
 }
 
 .eyebrow {
@@ -52,42 +49,22 @@
 }
 
 .title {
-  margin: $spacing-02 0;
+  margin-block: $spacing-02;
   @include type-style('heading-04');
 }
 
 .tabs {
-  margin-top: $spacing-06;
+  margin-block-start: $spacing-06;
 }
 
-.main {
+.panels {
   flex: 1;
-  padding-block: $spacing-07 $spacing-09;
+  padding-block: $spacing-05 $spacing-09;
 }
 
 .pageTitle {
-  margin-bottom: $spacing-05;
+  margin-block-end: $spacing-05;
   @include type-style('heading-03');
-}
-
-/* Tile grids: one column on phones, then the mockup's column counts. */
-.grid3,
-.grid2 {
-  display: grid;
-  gap: $spacing-05;
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 42rem) {
-  .grid2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 66rem) {
-  .grid3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }
 
 .tile {
@@ -107,11 +84,13 @@
   color: var(--cds-text-secondary);
 }
 
+// Tile actions wrap onto a new line in narrow tiles. (ButtonSet is kept
+// for form footers; it caps button width and doesn't wrap.)
 .tileActions {
   display: flex;
   flex-wrap: wrap;
   gap: $spacing-03;
-  margin-top: $spacing-05;
+  margin-block-start: $spacing-05;
 }
 
 .amount {
@@ -124,7 +103,7 @@
 }
 
 .section {
-  margin-top: $spacing-07;
+  margin-block-start: $spacing-07;
 }
 
 .tableScroll {
@@ -136,38 +115,16 @@
   background: var(--cds-layer-01);
 }
 
-.formGrid {
-  display: grid;
-  gap: $spacing-05;
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 42rem) {
-  .formGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .formGridWide {
-    grid-column: 1 / -1;
-  }
-}
-
 .formTotal {
   display: flex;
   justify-content: space-between;
-  margin-top: $spacing-05;
   @include type-style('body-compact-01');
 }
 
-.definition {
-  display: grid;
-  gap: $spacing-05;
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 42rem) {
-  .definition {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+// Description lists: <dt>/<dd> sit directly in the <dl> (no wrappers),
+// with Carbon spacing between each pair.
+.details dd:not(:last-child) {
+  margin-block-end: $spacing-05;
 }
 
 .label {
@@ -176,33 +133,27 @@
 }
 
 .value {
-  margin-top: $spacing-02;
+  margin-block-start: $spacing-02;
   @include type-style('body-01');
 }
 
 .toggleRow {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-03;
   padding-block: $spacing-05;
-  border-bottom: 1px solid var(--cds-border-subtle-01);
+  border-block-end: 1px solid var(--cds-border-subtle-01);
 }
 
 .toggleRow:last-child {
-  border-bottom: 0;
+  border-block-end: 0;
 }
 
 .toasts {
   position: fixed;
-  top: 3.5rem;
-  right: $spacing-05;
   z-index: 9000;
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-03;
+  top: $spacing-09;
+  right: $spacing-05;
 }
 
-.docRow {
+.sectionHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;

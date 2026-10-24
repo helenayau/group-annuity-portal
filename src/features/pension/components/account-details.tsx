@@ -1,7 +1,7 @@
 'use client';
 
 import { DocumentPdf } from '@carbon/icons-react';
-import { Button, Tile } from '@carbon/react';
+import { Button, Column, Grid, Tile } from '@carbon/react';
 import { useState } from 'react';
 import { grossMonthlyPayment, pensionPlan } from '@/constants/mock-api-pension';
 import { formatCurrencyCents } from '@/features/annuity/utils';
@@ -18,8 +18,9 @@ export function AccountDetails() {
   const [editingPayments, setEditingPayments] = useState(false);
 
   return (
-    <>
-      <div className={styles.grid3}>
+    <Grid withRowGap>
+      {/* 16 columns don't split into equal thirds; the letter tile has the most text. */}
+      <Column sm={4} md={4} lg={5}>
         <Tile className={styles.tile}>
           <h2 className={styles.tileTitle}>Gross monthly payments</h2>
           <p className={styles.amount}>{formatCurrencyCents(grossMonthlyPayment)}</p>
@@ -30,7 +31,9 @@ export function AccountDetails() {
             </Button>
           </div>
         </Tile>
+      </Column>
 
+      <Column sm={4} md={4} lg={5}>
         <Tile className={styles.tile}>
           <h2 className={styles.tileTitle}>Tax withholding forms</h2>
           <p className={styles.tileBody}>View your federal and state tax withholding forms.</p>
@@ -57,7 +60,9 @@ export function AccountDetails() {
             </Button>
           </div>
         </Tile>
+      </Column>
 
+      <Column sm={4} md={8} lg={6}>
         <Tile className={styles.tile}>
           <h2 className={styles.tileTitle}>Income verification letter</h2>
           <p className={styles.eyebrow}>
@@ -81,20 +86,21 @@ export function AccountDetails() {
             </Button>
           </div>
         </Tile>
-      </div>
+      </Column>
 
-      <PaymentHistory />
+      <Column sm={4} md={8} lg={16}>
+        <PaymentHistory />
+      </Column>
 
-      {editingPayments && (
-        <PaymentSettingsModal
-          accounts={accounts}
-          onClose={() => setEditingPayments(false)}
-          onSave={(updated) => {
-            setAccounts(updated);
-            setEditingPayments(false);
-          }}
-        />
-      )}
-    </>
+      <PaymentSettingsModal
+        open={editingPayments}
+        accounts={accounts}
+        onClose={() => setEditingPayments(false)}
+        onSave={(updated) => {
+          setAccounts(updated);
+          setEditingPayments(false);
+        }}
+      />
+    </Grid>
   );
 }

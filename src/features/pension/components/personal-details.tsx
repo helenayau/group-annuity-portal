@@ -1,7 +1,7 @@
 'use client';
 
 import { Edit } from '@carbon/icons-react';
-import { Button, Stack, TextInput, Tile } from '@carbon/react';
+import { Button, ButtonSet, Column, FormGroup, Grid, Stack, TextInput, Tile } from '@carbon/react';
 import { useStore } from '@tanstack/react-form';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -31,28 +31,32 @@ export function PersonalDetails() {
   const portalHref = usePortalHref();
 
   return (
-    <div className={styles.grid2}>
-      <Tile className={styles.tile}>
-        <h2 className={styles.tileTitle}>Personal details</h2>
-        <Address participant={participant} />
-        <div className={styles.tileActions}>
-          <Button as={Link} href={portalHref('/profile?edit=personal')} kind='tertiary' size='sm'>
-            Edit personal details
-          </Button>
-        </div>
-      </Tile>
-      <Tile className={styles.tile}>
-        <h2 className={styles.tileTitle}>Need to update other details?</h2>
-        <p className={styles.tileBody}>
-          You can update your email address, password, and other preferences on your profile.
-        </p>
-        <div className={styles.tileActions}>
-          <Button as={Link} href={portalHref('/profile')} kind='tertiary' size='sm'>
-            Go to profile
-          </Button>
-        </div>
-      </Tile>
-    </div>
+    <Grid withRowGap>
+      <Column sm={4} md={4} lg={8}>
+        <Tile className={styles.tile}>
+          <h2 className={styles.tileTitle}>Personal details</h2>
+          <Address participant={participant} />
+          <div className={styles.tileActions}>
+            <Button as={Link} href={portalHref('/profile?edit=personal')} kind='tertiary' size='sm'>
+              Edit personal details
+            </Button>
+          </div>
+        </Tile>
+      </Column>
+      <Column sm={4} md={4} lg={8}>
+        <Tile className={styles.tile}>
+          <h2 className={styles.tileTitle}>Need to update other details?</h2>
+          <p className={styles.tileBody}>
+            You can update your email address, password, and other preferences on your profile.
+          </p>
+          <div className={styles.tileActions}>
+            <Button as={Link} href={portalHref('/profile')} kind='tertiary' size='sm'>
+              Go to profile
+            </Button>
+          </div>
+        </Tile>
+      </Column>
+    </Grid>
   );
 }
 
@@ -65,13 +69,24 @@ const personalSchema = z.object({
   zip: z.string().regex(/^\d{5}$/, 'ZIP codes are 5 digits')
 });
 
-const personalFields = [
-  { name: 'firstName', label: 'First name' },
-  { name: 'lastName', label: 'Last name' },
-  { name: 'addressLine1', label: 'Street address', wide: true },
-  { name: 'city', label: 'City' },
-  { name: 'state', label: 'State' },
-  { name: 'zip', label: 'ZIP' }
+// Grouped so screen readers announce each set of fields in context.
+const personalFieldGroups = [
+  {
+    legend: 'Name',
+    fields: [
+      { name: 'firstName', label: 'First name' },
+      { name: 'lastName', label: 'Last name' }
+    ]
+  },
+  {
+    legend: 'Mailing address',
+    fields: [
+      { name: 'addressLine1', label: 'Street address' },
+      { name: 'city', label: 'City' },
+      { name: 'state', label: 'State' },
+      { name: 'zip', label: 'ZIP' }
+    ]
+  }
 ] as const;
 
 function PersonalDetailsForm({
@@ -108,34 +123,43 @@ function PersonalDetailsForm({
         form.handleSubmit();
       }}
     >
-      <div className={styles.formGrid}>
-        {personalFields.map(({ name, label, ...rest }) => (
-          <div key={name} className={'wide' in rest ? styles.formGridWide : undefined}>
-            <form.Field
-              name={name}
-              children={(field) => (
-                <TextInput
-                  id={`personal-${name}`}
-                  labelText={label}
-                  value={field.state.value}
-                  invalid={field.state.meta.errors.length > 0}
-                  invalidText={fieldError(field.state.meta.errors)}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                />
-              )}
-            />
-          </div>
-        ))}
-      </div>
-      <div className={styles.tileActions}>
-        <Button type='submit' kind='primary' size='md' disabled={!isDirty}>
-          Save changes
-        </Button>
-        <Button type='button' kind='secondary' size='md' onClick={onCancel}>
-          Cancel
-        </Button>
-      </div>
+      <Grid>
+        <Column sm={4} md={6} lg={8}>
+          <Stack gap={7}>
+            {personalFieldGroups.map((group) => (
+              <FormGroup key={group.legend} legendText={group.legend}>
+                <Stack gap={7}>
+                  {group.fields.map(({ name, label }) => (
+                    <form.Field
+                      key={name}
+                      name={name}
+                      children={(field) => (
+                        <TextInput
+                          id={`personal-${name}`}
+                          labelText={label}
+                          value={field.state.value}
+                          invalid={field.state.meta.errors.length > 0}
+                          invalidText={fieldError(field.state.meta.errors)}
+                          onBlur={field.handleBlur}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                        />
+                      )}
+                    />
+                  ))}
+                </Stack>
+              </FormGroup>
+            ))}
+            <ButtonSet>
+              <Button type='button' kind='secondary' size='lg' onClick={onCancel}>
+                Cancel
+              </Button>
+              <Button type='submit' kind='primary' size='lg' disabled={!isDirty}>
+                Save changes
+              </Button>
+            </ButtonSet>
+          </Stack>
+        </Column>
+      </Grid>
     </form>
   );
 }
@@ -149,7 +173,7 @@ export function PersonalDetailsSection({ defaultEditing = false }: { defaultEdit
   return (
     <Tile>
       <Stack gap={5}>
-        <div className={styles.docRow}>
+        <div className={styles.sectionHeader}>
           <div>
             <h2 className={styles.tileTitle}>Personal details</h2>
             <p className={styles.tileBody}>
