@@ -22,6 +22,7 @@ import type { Participant } from '@/constants/mock-api-pension';
 import { useAppForm } from '@/lib/form';
 import { usePension } from '../pension-context';
 import { pillButton } from '../styles';
+import { PersonalDetailsSection } from './personal-details-card';
 
 const contactSchema = z.object({
   email: z.email('Enter a valid email address'),
@@ -190,31 +191,12 @@ function PreferencesCard() {
   );
 }
 
-function PasswordCard() {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Password</CardTitle>
-        <CardDescription>
-          Password changes go through the sign-in provider in the full version of this app, so this
-          is disabled in this demo deployment.
-        </CardDescription>
-      </CardHeader>
-      <CardFooter>
-        <Button variant='outline' size='sm' className={pillButton} disabled>
-          Change password
-        </Button>
-      </CardFooter>
-    </Card>
-  );
-}
-
-export function PensionProfile() {
+export function PensionProfile({ editPersonal = false }: { editPersonal?: boolean }) {
   return (
     <div className='flex flex-col gap-4'>
+      <PersonalDetailsSection defaultEditing={editPersonal} />
       <ContactCard />
       <PreferencesCard />
-      <PasswordCard />
     </div>
   );
 }

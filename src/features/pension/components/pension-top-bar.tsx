@@ -13,11 +13,7 @@ export function PensionTopBar() {
 
   return (
     <header className='bg-card border-b'>
-      <div className='mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 md:px-6'>
-        <Link href='/pension' className='flex items-center gap-2 font-semibold'>
-          <Icons.piggyBank className='text-primary size-5' />
-          <span className='hidden sm:inline'>Pension Center</span>
-        </Link>
+      <div className='mx-auto flex h-14 max-w-6xl items-center justify-end gap-4 px-4 md:px-6'>
         <nav aria-label='Account' className='flex items-center gap-1'>
           <Link
             href='/pension'
