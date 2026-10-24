@@ -95,7 +95,7 @@ function ContactCard() {
     <Card>
       <CardHeader>
         <CardTitle>Contact information</CardTitle>
-        <CardDescription>How the plan reaches you about your payments</CardDescription>
+        <CardDescription>How the plan reaches you about your payments.</CardDescription>
         {!isEditing && (
           <CardAction>
             <Button
@@ -139,17 +139,17 @@ const preferences = [
   {
     id: 'paperless-tax',
     label: 'Paperless tax forms',
-    description: 'Post your 1099-R to E-documents instead of mailing it'
+    description: 'Post your 1099-R to E-documents instead of mailing it.'
   },
   {
     id: 'payment-email',
     label: 'Payment emails',
-    description: 'Email me when each monthly payment is sent'
+    description: 'Email me when each monthly payment is sent.'
   },
   {
     id: 'plan-news',
     label: 'Plan news',
-    description: 'Annual notices and updates from the trust'
+    description: 'Get annual notices and plan updates from the trust.'
   }
 ];
 
@@ -164,7 +164,9 @@ function PreferencesCard() {
     <Card>
       <CardHeader>
         <CardTitle>Preferences</CardTitle>
-        <CardDescription>Choose what we send you and how</CardDescription>
+        <CardDescription>
+          Pick which emails and notices you want to get from the plan.
+        </CardDescription>
       </CardHeader>
       <CardContent className='flex flex-col gap-3'>
         {preferences.map((pref) => (

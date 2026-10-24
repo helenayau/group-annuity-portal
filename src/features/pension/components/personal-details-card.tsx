@@ -160,7 +160,7 @@ export function PersonalDetailsSection({ defaultEditing = false }: { defaultEdit
       <CardHeader>
         <CardTitle>Personal details</CardTitle>
         <CardDescription>
-          Your name and mailing address are used on tax forms and plan notices
+          Your name and mailing address are used on tax forms and plan notices.
         </CardDescription>
         {!isEditing && (
           <CardAction>
