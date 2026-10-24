@@ -12,6 +12,8 @@ This is a Next.js 16 + shadcn/ui admin dashboard starter kit.
 - **[docs/clerk_setup.md](./docs/clerk_setup.md)** — Clerk auth setup: organizations, billing, environment variables
 - **[docs/deployment.md](./docs/deployment.md)** — Deployment: Vercel, production environment variables, Docker
 
+**Exception:** the group annuity portal (`src/features/pension/`, routes in `src/app/pension/`) is built on IBM Carbon, not shadcn. Read **[src/features/pension/CLAUDE.md](./src/features/pension/CLAUDE.md)** before working there; its rules override the conventions below.
+
 ## Critical Conventions
 
 - **React Query** for all data fetching — `void prefetchQuery()` on server + `useSuspenseQuery` on client (standard TanStack pattern), `useMutation` for forms, `HydrationBoundary` + `dehydrate` for hydration, `<Suspense fallback>` for streaming

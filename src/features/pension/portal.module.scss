@@ -1,19 +1,21 @@
 // Styles for the Carbon-based group annuity portal. Layout comes from
 // Carbon's Grid, Column, Stack and ButtonSet; this file only adds spacing
-// and type from Carbon's Sass tokens. Colors are the theme's --cds-* custom
-// properties so they follow whichever Carbon theme wraps the content.
+// and type from Carbon's Sass tokens. Colors are Carbon theme tokens, which
+// compile to --cds-* custom properties so they follow whichever Carbon theme
+// wraps the content. Checked by the Carbon token linter (bun lint:styles).
 @use '@carbon/styles/scss/spacing' as *;
 @use '@carbon/styles/scss/type' as *;
 @use '@carbon/styles/scss/colors' as *;
+@use '@carbon/styles/scss/theme' as *;
 
 .root {
   display: flex;
   overflow-x: clip;
   min-height: 100svh;
   flex-direction: column;
-  background: var(--cds-background);
-  color: var(--cds-text-primary);
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  background: $background;
+  color: $text-primary;
+  @include font-family('sans');
 }
 
 .headerActions {
@@ -40,13 +42,13 @@
 
 .band {
   padding-block-start: $spacing-07;
-  border-block-end: 1px solid var(--cds-border-subtle-01);
-  background: var(--cds-background);
+  border-block-end: 1px solid $border-subtle-01;
+  background: $background;
 }
 
 .eyebrow {
   @include type-style('body-compact-01');
-  color: var(--cds-text-secondary);
+  color: $text-secondary;
 }
 
 // The plan name is shown in capitals, as on the mockup. CSS does the
@@ -69,7 +71,7 @@
 
   flex: 1;
   padding-block: $spacing-05 $spacing-09;
-  background-color: var(--cds-background);
+  background-color: $background;
 }
 
 .pageTitle {
@@ -91,7 +93,7 @@
 .tileBody {
   flex: 1;
   @include type-style('body-01');
-  color: var(--cds-text-secondary);
+  color: $text-secondary;
 }
 
 // Tile actions are ghost buttons (Carbon: ghost buttons suit productive
@@ -107,7 +109,7 @@
 
 .amount {
   @include type-style('heading-05');
-  color: var(--cds-text-primary);
+  color: $text-primary;
 }
 
 .address {
@@ -144,11 +146,11 @@
   padding: 0;
   border: 0;
   background: none;
-  color: var(--cds-icon-secondary);
+  color: $icon-secondary;
   cursor: pointer;
 
   &:focus-visible {
-    outline: 2px solid var(--cds-focus);
+    outline: 2px solid $focus;
     outline-offset: 1px;
   }
 }
@@ -180,7 +182,7 @@
 
 .tableActions {
   padding: $spacing-03 0;
-  background: var(--cds-layer-01);
+  background: $layer;
 }
 
 // Passive "view" modals focus their content on open (data-modal-primary-
@@ -227,7 +229,7 @@
 
 .label {
   @include type-style('label-01');
-  color: var(--cds-text-secondary);
+  color: $text-secondary;
 }
 
 .value {
@@ -237,7 +239,7 @@
 
 .toggleRow {
   padding-block: $spacing-05;
-  border-block-end: 1px solid var(--cds-border-subtle-01);
+  border-block-end: 1px solid $border-subtle-01;
 }
 
 .toggleRow:last-child {
